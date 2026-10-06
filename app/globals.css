@@ -1,26 +1,134 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Route group app/(pages) automatická detekce nenašla */
+@source "../app";
+@source "../components";
+
+/* Tokeny z Figmy (Hrdina reality v3523 → Foundations) */
+@theme {
+  --font-sans: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
+
+  --color-navy-950: #021f40;
+  --color-navy-900: #042e5e;
+  --color-navy-700: #0a3f7c;
+  --color-brass-600: #6f5f3e;
+  --color-brass-500: #8a7850;
+  --color-brass-300: #bfac7d;
+  --color-ink-900: #10151c;
+  --color-ink-700: #2e3944;
+  --color-ink-500: #5c6875;
+  --color-ink-300: #8d98a4;
+  --color-surface-0: #ffffff;
+  --color-surface-50: #f7f6f3;
+  --color-surface-100: #eeebe4;
+  --color-line-200: #e2dfd8;
+  --color-line-dark: #1b3a62;
+  --color-on-dark-muted: #afbdd1;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Text styly z Figmy */
+@utility text-display-xl {
+  font-size: 64px;
+  line-height: 68px;
+  letter-spacing: -1.5px;
+  font-weight: 700;
+}
+@utility text-display-l {
+  font-size: 48px;
+  line-height: 54px;
+  letter-spacing: -1.2px;
+  font-weight: 700;
+}
+@utility text-heading-m {
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.6px;
+  font-weight: 600;
+}
+@utility text-heading-s {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.3px;
+  font-weight: 600;
+}
+@utility text-title-m {
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.2px;
+  font-weight: 600;
+}
+@utility text-title-s {
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 600;
+}
+@utility text-body-l {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 400;
+}
+@utility text-body-m {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
+}
+@utility text-body-s {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+@utility text-label-m {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1.6px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+@utility text-label-s {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.4px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+@utility text-button-m {
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  font-weight: 600;
+}
+@utility text-nav-m {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Horizontální odsazení stránky: 24 px mobil, 120 px desktop (1440) */
+@utility px-site {
+  padding-inline: 24px;
+  @media (width >= 48rem) {
+    padding-inline: 40px;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 120px;
   }
 }
 
+@utility container-site {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface-0);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
 }
