@@ -11,6 +11,7 @@ export default function ServiceCards({ variant }: { variant: "home" | "about" })
       {services.map((s, i) => (
         <article
           key={s.title}
+          data-reveal
           className={`flex flex-col rounded bg-surface-50 px-6 py-8 lg:px-8 lg:py-9 ${variant === "home" ? "border-t-2 border-brass-500" : ""}`}
         >
           <p className="text-label-s text-brass-500">{String(i + 1).padStart(2, "0")}</p>

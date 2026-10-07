@@ -17,8 +17,10 @@ export const contact_nemovitosti_schema = z.object({
     id: z.string().trim(),
 });
 
-export const CV_MAX_BYTES = 10 * 1024 * 1024;
-const CV_TYPES = [
+// Vercel pustí do serverové akce nejvýš 4,5 MB (pevný limit platformy, bodySizeLimit ho nezvýší),
+// soubor jde rovnou do e-mailu, takže 4 MB a rezerva na ostatní pole
+export const CV_MAX_BYTES = 4 * 1024 * 1024;
+export const CV_TYPES = [
     "application/pdf",
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -35,7 +37,7 @@ export const application_schema = z.object({
     consent: z.literal("on", {message: "Bez souhlasu přihlášku nemůžeme zpracovat"}),
     cv: z
         .instanceof(File)
-        .refine((f) => f.size <= CV_MAX_BYTES, {message: "Soubor je větší než 10 MB"})
+        .refine((f) => f.size <= CV_MAX_BYTES, {message: "Soubor je větší než 4 MB"})
         .refine((f) => CV_TYPES.includes(f.type), {message: "Nahrajte PDF nebo DOC"})
         .optional(),
 });

@@ -18,7 +18,7 @@ type Props = {
 // Figma: Card / Property (18:59)
 export default function PropertyCard({ href, imageUrl, title, name, specs, badge, dimmed, className = "" }: Props) {
   return (
-    <Link href={href} className={`group flex flex-col overflow-hidden rounded bg-surface-0 ${className}`}>
+    <Link href={href} data-reveal className={`group flex flex-col overflow-hidden rounded bg-surface-0 ${className}`}>
       <div className="relative h-[272px] overflow-hidden bg-surface-100">
         {imageUrl && (
           <Image

@@ -19,6 +19,7 @@ const staticRoutes: { path: string; changeFrequency: "daily" | "weekly" | "month
   { path: "/kariera", changeFrequency: "monthly", priority: 0.5 },
   { path: "/kontakt", changeFrequency: "monthly", priority: 0.7 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.6 },
+  { path: "/ochrana-osobnich-udaju", changeFrequency: "monthly", priority: 0.2 },
 ];
 
 // Nové nemovitosti se do sitemapy propíšou nejpozději do hodiny

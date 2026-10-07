@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 
 import { button } from "@/components/ui/button";
@@ -55,7 +56,13 @@ export default function ContactForm() {
         defaultValue={state.inputs?.msg}
         error={state.errors?.msg?.[0]}
       />
-      <p className="text-body-s text-ink-300">Odesláním souhlasíte se zpracováním osobních údajů.</p>
+      <p className="text-body-s text-ink-300">
+        Odesláním berete na vědomí{" "}
+        <Link href="/ochrana-osobnich-udaju#zpracovani" target="_blank" className="underline hover:text-navy-900">
+          zpracování osobních údajů
+        </Link>
+        .
+      </p>
       <button type="submit" disabled={pending} className={`${button.primary} mt-0.5 w-full`}>
         {pending ? "Odesílám…" : "Odeslat zprávu"}
       </button>

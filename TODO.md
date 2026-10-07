@@ -9,7 +9,7 @@ Stav k 5. 10. 2026: všech 8 stránek je převedených z Figmy (desktop i mobil)
   - [ ] Kontakt (`sendContact`)
   - [ ] Poptávka na detailu nemovitosti (`sendContactFromNemovitosti`)
   - [ ] Přihláška na Kariéře (`sendApplication`), včetně přílohy s CV blízko 10 MB
-- [ ] Stránka **Ochrana osobních údajů** a odkaz na ni z patičky (`components/layout/Footer.tsx:58`, zatím je tam jen `<span>`) a z textu u formulářů. Podrobnosti v sekci níže.
+- [ ] **Ochrana osobních údajů** (`/ochrana-osobnich-udaju`) je hotová a prolinkovaná z patičky i formulářů, ale chybí údaje od klienta: správce a IČO (`site.legal` v `lib/site.ts`), doby uchování a hosting. Text pak nechat zkontrolovat. Podrobnosti v sekci níže.
 
 ## K odsouhlasení s klientem
 

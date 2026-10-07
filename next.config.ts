@@ -3,9 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   experimental: {
     taint: true,
-    // Přihláška na /kariera posílá životopis až 10 MB
+    // Životopis z přihlášky jde přes serverovou akci, max. 4 MB (schemas.ts). Na Vercelu je strop 4,5 MB a výš nejde.
     serverActions: {
-      bodySizeLimit: "11mb",
+      bodySizeLimit: "5mb",
     },
   },
   images: {

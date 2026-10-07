@@ -40,7 +40,7 @@ export default function ArticleCard({
   );
 
   return (
-    <article className="flex flex-col">
+    <article data-reveal className="flex flex-col">
       {href ? (
         <Link href={href} className="group flex flex-col">
           {body}

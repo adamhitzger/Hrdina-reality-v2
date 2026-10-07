@@ -10,7 +10,7 @@ import { ApplicationInputs, ContactNemovitostiType, ContactType, application_sch
 import { REALITY_QUERY } from "@/sanity/lib/queries";
 import { renderKontaktEmail, renderPoptavkaEmail, renderPrihlaskaEmail } from "@/lib/emails";
 
-const LUKAS_EMAIL = "adam.hitzger@icloud.com"//"lukas.hrdina@hrdinareality.cz";
+const LUKAS_EMAIL = "lukas.hrdina@hrdinareality.cz";
 
 function smtp(){
   return nodemailer.createTransport({
@@ -235,6 +235,7 @@ export async function sendContact(
         const fullname = `${data.firstname} ${data.lastname}`;
         const mail = await renderPrihlaskaEmail(data);
 
+
         const sendMail = await transporter.sendMail({
           from: `"Web Hrdina Reality" <${process.env.FROM_EMAIL}>`,
           to: LUKAS_EMAIL,
@@ -269,3 +270,4 @@ export async function sendContact(
         };
     }
   }
+

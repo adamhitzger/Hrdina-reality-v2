@@ -42,7 +42,7 @@ export default async function RecenzePage() {
       <section className="bg-surface-0">
         <div className="container-site grid gap-5 px-6 py-16 md:grid-cols-2 lg:grid-cols-3 lg:gap-[30px] lg:px-[120px] lg:py-24">
           {reviews.map((r) => (
-            <figure key={r._id} className="flex flex-col self-start rounded border border-line-200 bg-surface-0 p-8">
+            <figure key={r._id} data-reveal className="flex flex-col self-start rounded border border-line-200 bg-surface-0 p-8">
               <p aria-label="5 z 5 hvězd" className="text-body-m text-brass-500">
                 ★★★★★
               </p>

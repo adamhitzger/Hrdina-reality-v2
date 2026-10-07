@@ -41,7 +41,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="cs"
       className={`${montserrat.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* Před prvním vykreslením, ať prvky pro ScrollReveal neproblikají; bez JS zůstanou vidět */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('reveal-ready')" }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <JsonLd data={organizationJsonLd()} />
         {children}

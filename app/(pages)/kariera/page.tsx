@@ -105,7 +105,7 @@ export default async function KarieraPage({ searchParams }: PageProps<"/kariera"
           />
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-[30px]">
             {roles.map((r) => (
-              <article key={r.slug} id={r.slug} className="scroll-mt-6 flex flex-col justify-between rounded border border-line-200 bg-surface-0 p-7">
+              <article key={r.slug} id={r.slug} data-reveal className="scroll-mt-6 flex flex-col justify-between rounded border border-line-200 bg-surface-0 p-7">
                 <div>
                   <p className="text-label-s text-brass-500">{r.tag}</p>
                   <h3 className="mt-[14px] text-title-m text-ink-900">{r.title}</h3>

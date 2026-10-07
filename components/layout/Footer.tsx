@@ -55,8 +55,9 @@ export default function Footer() {
 
         <div className="mt-[22px] flex flex-col gap-2.5 text-body-s text-on-dark-muted lg:mt-7 lg:flex-row-reverse lg:items-center lg:justify-between">
           <div className="flex flex-wrap gap-x-[18px] gap-y-2 lg:gap-7">
-            {/* TODO: odkaz, až bude existovat stránka se zásadami */}
-            <span>Ochrana osobních údajů</span>
+            <Link href="/ochrana-osobnich-udaju" className="hover:text-surface-0">
+              Ochrana osobních údajů
+            </Link>
             <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-surface-0">
               Facebook
             </a>

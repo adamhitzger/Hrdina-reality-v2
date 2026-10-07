@@ -22,6 +22,14 @@ export const site = {
     facebook: "https://www.facebook.com/HrdinaReality/",
     instagram: "https://www.instagram.com/hrdina_reality/",
   },
+  // Provozovatel webu a správce osobních údajů (ARES, ověřeno 6. 10. 2026)
+  legal: {
+    company: "Hrdina Group s.r.o.",
+    ico: "09617957",
+    seat: "U schodů 122/5, Hrdlořezy, 190 00 Praha 9",
+    register: "zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 422219",
+    privacyEmail: "lukas.hrdina@hrdinareality.cz",
+  },
   themeColor: "#042e5e",
   backgroundColor: "#f7f6f3",
 };

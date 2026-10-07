@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useState } from "react";
 
 import { button } from "@/components/ui/button";
 import { sendApplication } from "@/lib/actions";
 import { positions } from "@/lib/careers";
-import type { ApplicationInputs } from "@/lib/schemas";
+import { CV_MAX_BYTES, CV_TYPES, type ApplicationInputs } from "@/lib/schemas";
 import type { ActionResponse } from "@/types";
 
 import { SelectField, TextAreaField, TextField } from "./fields";
@@ -17,10 +18,28 @@ const sources = ["Doporučení od známého", "Web / Google", "Sociální sítě
 export default function ApplicationForm({ defaultPosition }: { defaultPosition?: string }) {
   const [state, formAction, pending] = useActionState<ActionResponse<ApplicationInputs>, FormData>(sendApplication, initialActionState);
   useActionToast(state);
-  const [fileName, setFileName] = useState<string>();
+  // Životopis jde rovnou do e-mailu přes serverovou akci, velikost a typ se hlídají už tady
+  const [cv, setCv] = useState<{ name: string; error?: string }>();
 
-  // cv a consent nejsou v ApplicationInputs, chyby k nim ale akce vrací
+  function handleFile(input: HTMLInputElement) {
+    const file = input.files?.[0];
+    if (!file) return setCv(undefined);
+    const error = !CV_TYPES.includes(file.type) ? "Nahrajte PDF nebo DOC" : file.size > CV_MAX_BYTES ? "Soubor je větší než 4 MB, zmenšete ho prosím" : undefined;
+    // Nevyhovující soubor se z inputu vyhodí, aby se neodeslal
+    if (error) input.value = "";
+    setCv({ name: file.name, error });
+  }
+
+  // Po odeslání se formulář resetuje, takže zapomeneme i vybraný soubor
+  const [lastState, setLastState] = useState(state);
+  if (state !== lastState) {
+    setLastState(state);
+    setCv(undefined);
+  }
+
+  // consent a cv nejsou v ApplicationInputs, chyby k nim ale akce vrací
   const errors = state.errors as Record<string, string[] | undefined> | undefined;
+  const cvError = cv?.error ?? errors?.cv?.[0];
 
   return (
     <form action={formAction} noValidate className="flex flex-col gap-[18px]">
@@ -106,7 +125,7 @@ export default function ApplicationForm({ defaultPosition }: { defaultPosition?:
         </span>
         <label
           className={`relative flex cursor-pointer flex-col items-center gap-1 rounded border border-dashed bg-surface-0 px-[18px] py-6 text-center transition-colors hover:border-brass-500 focus-within:border-navy-900 ${
-            errors?.cv ? "border-[#b42318]" : "border-line-200"
+            cvError ? "border-[#b42318]" : "border-line-200"
           }`}
         >
           <input
@@ -114,13 +133,17 @@ export default function ApplicationForm({ defaultPosition }: { defaultPosition?:
             name="cv"
             aria-labelledby="app-cv-label"
             accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            onChange={(e) => setFileName(e.target.files?.[0]?.name)}
+            onChange={(e) => handleFile(e.target)}
             className="absolute inset-0 cursor-pointer opacity-0"
           />
-          <span className="text-body-m text-ink-700">{fileName ?? "Přetáhněte soubor sem nebo vyberte z počítače"}</span>
-          <span className="text-body-s text-ink-300">PDF nebo DOC, max. 10 MB</span>
+          <span className="text-body-m text-ink-700">{cv && !cv.error ? cv.name : "Přetáhněte soubor sem nebo vyberte z počítače"}</span>
+          <span className="text-body-s text-ink-300">PDF nebo DOC, max. 4 MB</span>
         </label>
-        {errors?.cv?.[0] && <p className="text-body-s text-[#b42318]">{errors.cv[0]}</p>}
+        {cvError && (
+          <p role="alert" className="text-body-s text-[#b42318]">
+            {cvError}
+          </p>
+        )}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -131,7 +154,13 @@ export default function ApplicationForm({ defaultPosition }: { defaultPosition?:
             required
             className="mt-px size-5 shrink-0 cursor-pointer appearance-none rounded border border-line-200 bg-surface-0 bg-center bg-no-repeat checked:border-navy-900 checked:bg-navy-900 checked:bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22><path d=%22M5 10.5l3.2 3L15 7%22 fill=%22none%22 stroke=%22white%22 stroke-width=%222%22/></svg>')] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass-500"
           />
-          <span className="flex-1 text-body-s text-ink-500">Souhlasím se zpracováním osobních údajů pro účely výběrového řízení.</span>
+          <span className="flex-1 text-body-s text-ink-500">
+            Souhlasím se{" "}
+            <Link href="/ochrana-osobnich-udaju#zpracovani" target="_blank" className="underline hover:text-navy-900">
+              zpracováním osobních údajů
+            </Link>{" "}
+            pro účely výběrového řízení.
+          </span>
         </label>
         {errors?.consent?.[0] && <p className="text-body-s text-[#b42318]">{errors.consent[0]}</p>}
       </div>
