@@ -46,7 +46,7 @@ export default async function RecenzePage() {
               <p aria-label="5 z 5 hvězd" className="text-body-m text-brass-500">
                 ★★★★★
               </p>
-              <blockquote className="mt-4 text-body-m whitespace-pre-line text-ink-700">{r.review}</blockquote>
+              <blockquote className="mt-4 text-body-m whitespace-pre-line text-ink-700">{r.review.length < 250 ? r.review : r.review.substring(0,249) + "..."}</blockquote>
               {r.imageUrl && (
                 <div className="mt-4">
                   <ReviewPhoto src={r.imageUrl} name={r.clients} />
