@@ -201,6 +201,8 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
                     </dl>
                   ))}
                 </div>
+                {/* Figma: Detail → Left column (23:269). Platí pro všechny inzeráty – ověřit s klientem (TODO.md) */}
+                <p className="mt-4 text-body-s text-ink-300">Provize je součástí kupní ceny.</p>
               </>
             )}
 

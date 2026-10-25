@@ -14,7 +14,9 @@ Stav k 5. 10. 2026: všech 8 stránek je převedených z Figmy (desktop i mobil)
 ## K odsouhlasení s klientem
 
 - [ ] Kontakty makléřů: telefon a e-mail je jen u Lukáše. Čísla …425 a …426 z Figmy vypadala jako zástupná, chybí skutečné (`agentContacts`).
-- [ ] Jméno Petry: v Sanity je teď „Petrá Prosrová“ (překlep v „Petrá“), Figma má „Prosrová“. Opravit v Sanity, propisuje se i do schema.org na O nás.
+- [ ] Jméno Petry: v Sanity je teď „Petrá Prosrová“ (překlep v „Petrá“), Figma má „Prosrová“. Opravit v Sanity, propisuje se i do schema.org na O nás. Pozice je v Sanity „Realitní makléř“, Figma má „Realitní makléřka“.
+- [ ] Detail nemovitosti: „Provize je součástí kupní ceny.“ (z Figmy) se teď ukazuje u všech inzerátů. Ověřit, že to platí vždy, i u pronájmů.
+- [ ] Patička: Figma má „Prodej, pronájem a výkup nemovitostí na Vysočině — už 19 let.“, web má „Prodej a pronájem nemovitostí na Vysočině.“ (výkup se změnil na tržní odhady). Rozhodnout s klientem.
 - [ ] Čísla 400+, 38 dní, 4,9 ★ a 127 hodnocení a recenze jsou převzaté z Figmy. Ověřit, že odpovídají skutečnosti.
 - [ ] Doplnit do Sanity další nemovitosti. Teď je aktivní jen jedna, takže se na detailu skrývá sekce „Podobné nemovitosti“.
 - [ ] Opravit GPS souřadnice u inzerátu v Sanity, ukazují do Francie. Mapa teď hledá podle adresy.
