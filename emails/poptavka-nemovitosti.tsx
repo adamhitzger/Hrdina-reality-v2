@@ -14,13 +14,14 @@ export interface PoptavkaProperty {
 
 export interface PoptavkaEmailProps extends Customer {
   property: PoptavkaProperty | null;
+  topic?: string;
   sentAt?: Date;
 }
 
 export const poptavkaSubject = (fullname: string, propertyName?: string) =>
   propertyName ? `Poptávka: ${propertyName} — ${fullname}` : `Poptávka nemovitosti — ${fullname}`;
 
-export default function PoptavkaNemovitostiEmail({ property, sentAt = new Date(), ...customer }: PoptavkaEmailProps) {
+export default function PoptavkaNemovitostiEmail({ property, topic, sentAt = new Date(), ...customer }: PoptavkaEmailProps) {
   const propertyUrl = property ? `${siteUrl}/nemovitosti/${encodeURIComponent(property.slug)}` : undefined;
   const thumb = property?.imageUrl ? `${property.imageUrl}?w=336&h=240&fit=crop&fm=jpg&q=80` : undefined;
 
@@ -33,6 +34,7 @@ export default function PoptavkaNemovitostiEmail({ property, sentAt = new Date()
       meta={`Přijato ${formatReceived(sentAt)} z detailu nemovitosti`}
       replySubject={`Re: ${property?.name ?? "Vaše poptávka"} — Hrdina Reality`}
       customer={customer}
+      extraRows={topic ? [["S čím pomoci", topic]] : []}
     >
       {property && (
         <Section className="m-pad" style={{ padding: "0 40px 32px" }}>
@@ -67,6 +69,7 @@ PoptavkaNemovitostiEmail.PreviewProps = {
   fullname: "Jan Novák",
   email: "jan.novak@email.cz",
   phone: "+420 777 123 456",
+  topic: "Chci si domluvit prohlídku",
   msg: "Dobrý den, rád bych se přišel podívat na dům v Mírovce. Hodila by se mi sobota dopoledne, případně kterýkoliv všední den po 16. hodině.\n\nDěkuji, Jan Novák",
   sentAt: new Date("2026-10-05T12:32:00Z"),
   property: {

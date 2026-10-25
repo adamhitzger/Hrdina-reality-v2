@@ -9,10 +9,20 @@ export const contact_schema = z.object({
     msg: z.string().trim().optional()
 });
 
+// Figma: Poptávka → „S čím vám můžeme pomoct?“ (50:1044), první možnost je předvybraná
+export const INQUIRY_TOPICS = [
+    "Chci si domluvit prohlídku",
+    "Mám dotaz k nemovitosti",
+    "Chci podklady (LV, energetický štítek, půdorysy)",
+    "Řeším financování nebo hypotéku",
+    "Chci nejdřív prodat svou nemovitost",
+] as const;
+
 export const contact_nemovitosti_schema = z.object({
     fullname: z.string().min(3, {message: "Celé jméno je moc krátké"}).trim(),
     email: z.email({message: "Zadaný formát e-mailu je nespravný"}).min(3, {message: "E-mail je moc krátký"}).trim(),
     phone: z.string().min(1, {message: "Telefonní číslo je moc krátké"}).regex(phoneRegex, {message: "Zadali jste číslo ve špatném formátu"}),
+    topic: z.enum(INQUIRY_TOPICS, {message: "Vyberte, s čím vám můžeme pomoct"}),
     msg: z.string().optional(),
     id: z.string().trim(),
 });

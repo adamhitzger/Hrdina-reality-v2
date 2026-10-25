@@ -18,6 +18,10 @@ export const site = {
     country: "CZ",
   },
   openingHours: "Mo-Fr 09:00-17:00",
+  // Havlíčkovo náměstí 56 podle OpenStreetMap (ověřeno 24. 10. 2026)
+  geo: { latitude: 49.6066832, longitude: 15.5786727 },
+  logo: "/images/hr-mark.png",
+  founder: "Lukáš Hrdina",
   social: {
     facebook: "https://www.facebook.com/HrdinaReality/",
     instagram: "https://www.instagram.com/hrdina_reality/",
@@ -26,6 +30,7 @@ export const site = {
   legal: {
     company: "Hrdina Group s.r.o.",
     ico: "09617957",
+    dic: "CZ09617957",
     seat: "U schodů 122/5, Hrdlořezy, 190 00 Praha 9",
     register: "zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 422219",
     privacyEmail: "lukas.hrdina@hrdinareality.cz",
@@ -52,6 +57,9 @@ export function pageMetadata({
 }): Metadata {
   // klíč `images` musí úplně chybět, jinak přebije opengraph-image.tsx segmentu
   const images = defaultImage ? { images: [defaultOgImage] } : {};
+  // Názvy ze Sanity občas končí mezerou
+  title = title.trim();
+  description = description.trim();
   return {
     title,
     description,
@@ -67,4 +75,13 @@ export function pageMetadata({
     },
     twitter: { card: "summary_large_image", ...images },
   };
+}
+
+// Výpis se stránkováním přes ?strana=N. Další strany mají vlastní canonical i titulek, jinak by je Google bral jako kopii první.
+export function listingMetadata({ title, description, path, page }: { title: string; description: string; path: string; page: number }) {
+  return pageMetadata({
+    title: page > 1 ? `${title} – strana ${page}` : title,
+    description,
+    path: page > 1 ? `${path}?strana=${page}` : path,
+  });
 }

@@ -1,8 +1,8 @@
 import type { StaticImageData } from "next/image";
 
 import photoFlowers from "@/public/images/photo-flowers.jpg";
-import photoMagazine from "@/public/images/photo-magazine.jpg";
-import photoOffice from "@/public/images/photo-office.jpg";
+import photoSold from "@/public/images/photo-sold.jpg";
+import photoWindow from "@/public/images/photo-window.jpg";
 
 // Statické texty z Figmy (Hrdina reality v3523). Pro obsah ze Sanity viz sanity/lib/queries.ts.
 
@@ -18,52 +18,76 @@ export const services = [
     bullets: ["Prověření nájemníka", "Nájemní smlouva na míru", "Předání a předávací protokol"],
   },
   {
-    title: "Výkup za hotové",
+    title: "Tržní odhady",
     text: "Když potřebujete peníze rychle. Vykoupíme nemovitost i s dluhy nebo exekucí — bez čekání na kupce.",
     bullets: ["Nabídka do 48 hodin", "Vyplacení do 14 dnů", "Řešíme i exekuce a zástavy"],
   },
 ];
 
 export const aboutTiles: { title: string; text: string; href: string; image: StaticImageData }[] = [
-  { title: "O nás", text: "Kdo za Hrdina Reality stojí a proč nám klienti věří už 19 let.", href: "/o-nas", image: photoFlowers },
-  { title: "Recenze", text: "Co říkají lidé, kterým jsme pomohli s prodejem nebo koupí.", href: "/recenze", image: photoOffice },
   {
-    title: "Realizované prodeje",
-    text: "Nemovitosti, které jsme prodali — a za jaké ceny.",
+    title: "Kdo jsme",
+    text: "Za každou nemovitostí stojí příběh. Za Hrdina Reality lidé. Seznamte se s námi a zjistěte, proč je osobní přístup základem naší práce už 19 let.",
+    href: "/o-nas",
+    image: photoFlowers,
+  },
+  {
+    title: "Zkušenosti našich klientů",
+    text: "Nejlépe za nás mluví naši klienti. Přečtěte si jejich zkušenosti s Hrdina Reality.",
+    href: "/recenze",
+    image: photoWindow,
+  },
+  {
+    title: "Zrealizované obchody",
+    text: "Naše výsledky mluví za nás. Podívejte se, co jsme prodali a za jaké ceny.",
     href: "/realizovane-prodeje",
-    image: photoMagazine,
+    image: photoSold,
   },
 ];
 
-// Ve Figmě má text jen první otázka – ostatní odpovědi je potřeba zkontrolovat
+// Odpovědi jsou z Figmy. Odstavce odděluje prázdný řádek.
 export const faq = [
   {
-    q: "Jak probíhá prodej nemovitosti přes realitní kancelář?",
-    a: "Začneme nezávaznou schůzkou přímo u vás. Projdeme nemovitost, řekneme si cíl i termín a navrhneme cenu podle reálných prodejů v okolí. Pak nemovitost nafotíme, připravíme inzerát a spustíme nabídku. Prohlídky vodíme my, vyjednáváme za vás a celý obchod dotáhneme přes advokátní úschovu až k převodu na katastru.",
+    q: "Jak probíhá prodej nemovitosti s Hrdina Reality?",
+    a: `Od prvního setkání až po úspěšný prodej.
+
+Nejprve se potkáme. Buď u nás v kanceláři nebo přímo u vás, prohlédneme si nemovitost a probereme vaše představy i časové možnosti. Na základě reálných prodejů v okolí stanovíme vhodnou tržní cenu a připravíme strategii prodeje.
+
+Zajistíme profesionální prezentaci, inzerci, prohlídky i vyjednávání se zájemci. Vy se nemusíte zabývat každým detailem – vše důležité zařídíme za vás.
+
+Od první nabídky přes bezpečné právní vypořádání až po převod vlastnického práva na katastru. Váš prodej. Naše starost.`,
   },
   {
     q: "Kolik stojí služby realitní kanceláře?",
-    a: "Odměna se odvíjí od typu nemovitosti a rozsahu služeb. Přesnou částku vám řekneme hned na první schůzce, ještě než cokoli podepíšete.",
+    a: "Výše odměny se stanovuje individuálně podle typu nemovitosti a rozsahu poskytovaných služeb. Veškeré podmínky vám transparentně představíme již při úvodní schůzce, abyste měli od začátku jasno v ceně i rozsahu naší spolupráce.",
   },
   {
-    q: "Můžu prodávat nemovitost i bez realitky?",
-    a: "Samozřejmě. S námi ale nemusíte řešit ocenění, inzerci, prohlídky, vyjednávání ani smlouvy a úschovu — to vše zařídíme za vás.",
+    q: "Můžu prodávat nemovitost i bez realitní kanceláře?",
+    a: `Ano, nemovitost můžete prodat i vlastními silami. Profesionální realitní servis vám však ušetří čas, pomůže minimalizovat rizika a zajistí, aby měl prodej jasný řád od prvního kroku až po předání nemovitosti.
+
+V Hrdina Reality se postaráme o vše podstatné – od stanovení reálné tržní ceny a profesionální prezentace přes marketing, prohlídky a vyjednávání se zájemci až po smluvní dokumentaci a bezpečné vypořádání celé transakce.
+
+Vy máte jistotu, že na prodej nejste sami. My hlídáme každý důležitý krok, abyste svou nemovitost prodali bezpečně, s klidem a za odpovídajících podmínek.`,
   },
   {
     q: "Pomůžete mi s odhadem ceny nemovitosti?",
-    a: "Ano. Odhad tržní ceny připravíme zdarma a nezávazně podle skutečných prodejů v okolí.",
+    a: `Ano. Zpracujeme pro vás bezplatný a nezávazný odhad tržní hodnoty nemovitosti, který vychází z analýzy skutečně realizovaných prodejů v dané lokalitě a zohledňuje konkrétní vlastnosti i stav nemovitosti.
+
+Získáte tak odborný a realistický podklad pro informované rozhodnutí o dalším postupu.
+
+Správně stanovená cena je prvním krokem k úspěšnému prodeji.`,
   },
   {
     q: "Zajišťujete i právní servis a smlouvy?",
-    a: "Ano. Smlouvy připravuje náš právní servis a peníze jdou přes advokátní úschovu až do převodu na katastru.",
+    a: "Ano. Veškerou smluvní dokumentaci zajišťuje náš právní servis. Kupní cena je uložena v bezpečné advokátní úschově a prodávajícímu je vyplacena po splnění sjednaných podmínek, v návaznosti na dokončení převodu vlastnického práva v katastru nemovitostí.",
   },
   {
     q: "Jak dlouho trvá, než se nemovitost prodá?",
-    a: "Záleží na typu, lokalitě a ceně. Když je cena nastavená podle trhu, prodáváme obvykle v řádu týdnů.",
+    a: "Doba prodeje závisí na typu nemovitosti, lokalitě a správně nastavené ceně. Pokud cena odpovídá aktuální situaci na trhu, může být nemovitost prodána již během několika týdnů.",
   },
   {
     q: "Nabízíte své služby pouze na Vysočině?",
-    a: "Těžiště naší práce je v Havlíčkově Brodě a na Vysočině, kde trh dobře známe. Zavolejte a domluvíme se i na nemovitosti mimo region.",
+    a: "Naší hlavní oblastí působení je Havlíčkův Brod a celý Kraj Vysočina, kde díky dlouholetým zkušenostem důkladně známe místní trh i jeho specifika. Zkušenosti máme také s prodejem nemovitostí napříč Českou republikou i v zahraničí. Rádi s vámi proto probereme možnosti spolupráce bez ohledu na to, kde se vaše nemovitost nachází.",
   },
 ];
 
@@ -75,16 +99,16 @@ export const soldStats = [
 
 export const values = [
   {
-    title: "Cena podle reality, ne podle přání",
-    text: "Řekneme vám číslo, za které se nemovitost opravdu prodá — i když je nižší, než jste čekali. Přestřelená cena stojí tři měsíce navíc.",
+    title: "Správná cena je základ úspěšného prodeje",
+    text: "Řekneme vám otevřeně, za kolik lze vaši nemovitost reálně prodat. Vycházíme ze skutečných prodejů a znalosti místního trhu, ne z nereálných slibů. Správně nastavená cena šetří čas a pomáhá dosáhnout nejlepšího možného výsledku.",
   },
   {
-    title: "Jeden člověk od začátku do konce",
-    text: "Žádné předávání mezi odděleními. Kdo si vezme zakázku, ten ji dotáhne až k podpisu na katastru.",
+    title: "Váš osobní makléř po celou dobu",
+    text: "Od prvního setkání až po dokončení obchodu máte po svém boku jednoho osobního makléře. Člověka, který zná vaše potřeby, rozumí každému detailu a je vám po celou dobu k dispozici. Vaši důvěru bereme osobně – stejně jako odpovědnost za výsledek.",
   },
   {
-    title: "Papíry řešíme my, ne vy",
-    text: "Smlouvy, úschova, energetický štítek, katastr. Vy přijdete podepsat a převzít peníze.",
+    title: "Od smluv po katastr. Vše pod kontrolou",
+    text: "Zajistíme smlouvy, advokátní úschovu i převod na katastru. Každý krok hlídáme s důrazem na právní jistotu a ochranu vašich peněz. Vy máte jistotu bezpečného obchodu a kupní cenu obdržíte podle sjednaných podmínek.",
   },
 ];
 
@@ -105,21 +129,27 @@ export const cultureStats = [
 export const benefits = [
   {
     title: "Jméno, kterému se věří",
-    text: "19 let v regionu znamená, že lidé k nám chodí sami. Nezačínáte od nuly, ale s kontakty kanceláře.",
+    text: "19 let zkušeností a důvěry v regionu. Klienti nás znají a sami se na nás obracejí. U nás nezačínáte od nuly – získáváte zázemí zavedené kanceláře, její kontakty i dobré jméno.",
   },
   {
     title: "Zaučení v praxi",
-    text: "Žádná školení z videa. Chodíte s námi na schůzky, prohlídky i k podpisům, dokud si nebudete jistí.",
+    text: "Neučíte se z videí. Učíte se s námi v praxi. Od prvních schůzek přes prohlídky až po podpis smluv vás provázíme krok za krokem. Zkušenosti předáváme osobně, dokud si nebudete jistí v každé situaci.",
   },
   {
     title: "Zázemí kanceláře",
-    text: "Kancelář na náměstí, smlouvy přes advokátní úschovu, právní servis a hotové šablony dokumentů.",
+    text: "Zázemí zavedené kanceláře přímo na náměstí, kompletní právní servis, bezpečná advokátní úschova a připravené vzory dokumentů. Vše potřebné máte k dispozici, abyste se mohli soustředit na klienty a úspěšné obchody.",
   },
-  { title: "Marketing za vás", text: "Profesionální fotky, inzerce na hlavních portálech a sociální sítě řešíme centrálně." },
-  { title: "Prostor růst", text: "Od junior makléře k vlastním zakázkám a vlastnímu týmu. Tempo si určujete sami." },
+  {
+    title: "Marketing za vás",
+    text: "O profesionální prezentaci nemovitostí se postaráme za vás. Od kvalitních fotografií přes inzerci na hlavních realitních portálech až po sociální sítě. Vy se soustředíte na klienty, my vám pomáháme s marketingem.",
+  },
+  {
+    title: "Prostor růst",
+    text: "Od prvních zkušeností až po vlastní klienty, zakázky a tým. Podporujeme váš profesní růst a dáváme vám prostor rozvíjet se vlastním tempem, podle vašich ambicí a cílů.",
+  },
   {
     title: "Rodinná atmosféra",
-    text: "Jsme malý tým. Znáte se se všemi, pomáháte si a za majitelem můžete kdykoli přijít.",
+    text: "Zakládáme si na osobních vztazích a otevřené spolupráci. Známe se, pomáháme si a sdílíme zkušenosti. Kdykoli potřebujete radu nebo podporu, víte, za kým přijít – včetně majitele kanceláře.",
   },
 ];
 

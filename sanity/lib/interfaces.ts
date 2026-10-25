@@ -1,7 +1,5 @@
 import type { PortableTextBlock } from "next-sanity";
 type TypedObject = { _type: string; _key?: string };
-// Dříve z "@react-three/fiber" – ten v projektu není nainstalovaný
-type Vector3 = [x: number, y: number, z: number] | number;
 
 type Heating = "Ústřední topení" | "Tuhá paliva" | "Vlastní";
 type Water = "Dálkový odvod" | "Studna" | "Vlastní";
@@ -13,17 +11,6 @@ type Parking = "Venkovní" | "Vnitřní" | "Žádné";
 type Equipment = "Kompletní" | "Částečné" | "Žádné";
 type Type = "Byt" |"Rodinný dům" | "Chata" | "Chalupa" | "Pozemek";
 type Status =  "Na prodej" | "K pronájmu" | "Prodáno" | "Storno";
-type Accordition = {
-    heading: string;
-    text: string;
-  };
-
-  export interface SearchParamsProps {
-    searchParams: { [key: string]: string | undefined};
-  }
-
-export type Section = TextWithImageSection | HeadingSection | StepsSection | ButtonSection | AccorditionsSection | Form;
-
 export interface TextWithImageSection {
     _type: "textWithImage" | undefined;
     textWithImageUrl: string;
@@ -39,57 +26,6 @@ export interface TextWithImageSection {
     isDynamic: boolean;
   };
 
-interface HeadingSection {
-    _type: "heading";
-    text: string;
-  };
-  
-interface StepsSection {
-    _type: "steps";
-    steps: Steps[];
-  };
-  
-export interface Steps {
-    iconUrl: string;
-    number: number;
-    desc: string;
-  };
-
-  export interface Form {
-    _type: "form";
-    heading: string;
-    text: string;
-  };
-  
-interface ButtonSection {
-    _type: "button";
-    text: string;
-    url: string;
-  };
-  
-interface AccorditionsSection {
-    _type: "accorditions";
-    accorditions: Accordition[];
-  };
-
-export interface BookInter {
-    frontUrl: string;
-    backUrl: string;
-};
-
-export interface BookPos extends BookInter {
-    id: number,
-    position: Vector3 | undefined;
-    element?:  Element;
-    
-
-}
-
-export interface MySceneProps {
-    children: React.ReactNode;
-    pages: number;
-}
-
 export interface Staff {
     name: string;
     position: string;
@@ -97,11 +33,6 @@ export interface Staff {
     description: string[];
     staffUrl: string;
 };
-
-export interface SectionsOnMainPage {
-  poradi: number;
-  textWithImage: TextWithImageSection;
-}
 
 export interface RealityCard {
     name: string
@@ -141,6 +72,7 @@ export interface Reality {
     type: Type;
     material: Material;
     equipment: Equipment;
+    features?: string[];
     garage: Gargae;
     parking: Parking;
     owner: Owner;
@@ -149,45 +81,63 @@ export interface Reality {
     heating: Heating;
 };
 
-export interface Pages {
-    name: string;
-    slug: string;
-    heading: string;
-    pageImageUrl: string;
-};
-
-export interface MyPage {
-    name: string;
-    slug: string;
-    color: "Černá" | "Bílá",
-    overview: string,
-    heading: string;
-    pageImageUrl: string;
-    sections: Section[];
-};
 
 
 export interface Review {
     _id: string;
     review: string;
     clients: string;
+    deal?: string;
     imageUrl?: string;
 };
 
-export interface PostCard {
+// Článek blogu = dokument „Podstránky“ (typ `page`)
+export interface ArticleCard {
     title: string;
     slug: string;
-    publishedAt: string;
-    category?: string;
-    excerpt?: string;
+    _createdAt: string;
+    _updatedAt: string;
+    overview?: string;
     imageUrl?: string;
-    author?: string;
+    /** Prostý text prvního odstavce, z něj se skládá perex, když chybí popisek pro Google */
+    intro?: string;
     words?: number;
 };
 
-export interface Post extends PostCard {
-    _updatedAt: string;
-    body?: PortableTextBlock[];
-    authorPosition?: string;
-    authorImageUrl?: string;
+type Block = PortableTextBlock;
+
+export type ArticleSection = { _key: string } & (
+    | {
+          _type: "textWithImage";
+          imageUrl?: string;
+          imageWidth?: number;
+          imageHeight?: number;
+          heading?: string;
+          text?: Block[];
+          button?: { text?: string; url?: string };
+          position?: "Text vlevo" | "Obrázek vlevo";
+          image_pos?: "1/2 sekce" | "1/4 sekce" | "1/6 sekce";
+      }
+    | { _type: "heading"; text?: string }
+    | { _type: "steps"; steps?: { _key: string; number?: number; desc?: string }[] }
+    | { _type: "button"; text?: string; url?: string }
+    | { _type: "accorditions"; accorditions?: { _key: string; heading?: string; text?: string }[] }
+    | { _type: "form"; heading?: string; text?: Block[] }
+);
+
+export interface Article extends ArticleCard {
+    heading?: string;
+    sections?: ArticleSection[];
 };
+
+export interface OpenPosition {
+  _createdAt: string;
+  _updatedAt?: string;
+  title: string;
+  slug: string;
+  tag?: string;
+  text: string;
+  employmentType?: string[];
+  datePosted?: string;
+  jobPosting?: boolean;
+}

@@ -1,14 +1,17 @@
 import ContactForm from "@/components/forms/ContactForm";
+import JsonLd from "@/components/JsonLd";
 import MapEmbed from "@/components/ui/MapEmbed";
 import PageHero from "@/components/ui/PageHero";
 import { telHref } from "@/lib/format";
+import { organizationId, pageJsonLd } from "@/lib/json-ld";
 import { pageMetadata, site } from "@/lib/site";
+import heroKontakt from "@/public/images/hero-kontakt.jpg";
 
-export const metadata = pageMetadata({
-  title: "Kontakt",
-  description: "Kancelář na Havlíčkově náměstí 56 v Havlíčkově Brodě. Zavolejte na +420 773 498 424 nebo nám napište.",
-  path: "/kontakt",
-});
+const TITLE = "Kontakt – kancelář na Havlíčkově náměstí";
+const DESCRIPTION =
+  "Kancelář Hrdina Reality najdete na Havlíčkově náměstí 56 v Havlíčkově Brodě. Po–Pá 9–17, jinak po domluvě. Zavolejte na +420 773 498 424 nebo napište.";
+
+export const metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/kontakt" });
 
 const rows: { label: string; value: string; href?: string }[] = [
   { label: "Telefon", value: site.phone, href: telHref(site.phone) },
@@ -22,15 +25,30 @@ export default function KontaktPage() {
 
   return (
     <>
-      <PageHero crumb="Kontakt" title="Kontakt" lead="Zavolejte, napište nebo se zastavte přímo v kanceláři na náměstí." />
+      <JsonLd
+        data={pageJsonLd({
+          type: "ContactPage",
+          path: "/kontakt",
+          name: TITLE,
+          description: DESCRIPTION,
+          crumbs: [{ name: "Kontakt", path: "/kontakt" }],
+          mainEntity: { "@id": organizationId },
+        })}
+      />
+      <PageHero
+        crumb="Kontakt"
+        title="Kontakt"
+        lead="Každá nemovitost i každý klient mají svůj příběh. Rádi si vyslechneme ten váš a pomůžeme vám najít nejlepší cestu dál. Zastavte se za námi na Havlíčkově náměstí, zavolejte nebo napište. Setkání je nezávazné a zdarma."
+        image={heroKontakt}
+      />
 
       {/* Kontakt — obsah (32:641) */}
       <section className="bg-surface-0">
-        <div className="container-site flex flex-col gap-12 py-14 lg:flex-row lg:items-start lg:gap-20 lg:px-[120px] lg:py-24">
-          <div className="flex-1 px-6 lg:px-0">
+        <div className="container-site flex flex-col gap-12 py-14 lg:flex-row lg:items-start lg:gap-12 lg:px-[120px] xl:gap-20 lg:py-24">
+          <div data-reveal className="flex-1 px-6 lg:px-0">
             <p className="text-label-s text-brass-500 lg:text-label-m">Kde nás najdete</p>
-            <h2 className="mt-[14px] text-heading-m text-ink-900 lg:mt-4 lg:w-[480px] lg:text-display-l">{site.address.street}</h2>
-            <p className="mt-4 text-body-m text-ink-500 lg:mt-5 lg:w-[460px]">
+            <h2 className="mt-[14px] text-heading-m text-ink-900 lg:mt-4 lg:max-w-[480px] lg:text-display-l">{site.address.street}</h2>
+            <p className="mt-4 text-body-m text-ink-500 lg:mt-5 lg:max-w-[460px]">
               {site.address.postalCode} {site.address.city} — kancelář je přímo na náměstí, vchod vedle lékárny.
             </p>
             <dl className="mt-8 lg:mt-10">
@@ -51,7 +69,7 @@ export default function KontaktPage() {
             </dl>
           </div>
 
-          <div className="bg-surface-50 px-6 py-10 lg:w-[560px] lg:shrink-0 lg:rounded lg:p-10">
+          <div data-reveal className="bg-surface-50 px-6 py-10 lg:w-[50%] lg:shrink-0 lg:rounded lg:p-10 xl:w-[560px]">
             <h2 className="text-heading-s text-ink-900">Napište nám</h2>
             <p className="mt-2 text-body-s text-ink-500">Ozveme se do 24 hodin, obvykle dřív.</p>
             <div className="mt-7">

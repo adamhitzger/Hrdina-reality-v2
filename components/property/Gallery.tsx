@@ -33,9 +33,9 @@ export default function Gallery({ name, photos, plans }: { name: string; photos:
   return (
     <>
       <div className="flex gap-3">
-        <div className="relative h-[290px] flex-1 overflow-hidden bg-surface-100 lg:h-[520px] lg:w-[790px] lg:flex-none lg:rounded">
+        <div className="relative h-[290px] flex-1 overflow-hidden bg-surface-100 lg:h-[520px] lg:flex-[2] lg:rounded xl:w-[790px] xl:flex-none">
           <button type="button" onClick={() => setOpen({ list: photos, index: 0 })} aria-label="Otevřít galerii" className="absolute inset-0">
-            {main && <Image src={main} alt={name} fill priority sizes="(min-width: 1024px) 790px, 100vw" className="object-cover" />}
+            {main && <Image src={main} alt={name} fill priority sizes="(min-width: 1280px) 790px, (min-width: 1024px) 66vw, 100vw" className="object-cover" />}
           </button>
           <div className="absolute bottom-4 left-4 flex gap-2.5 lg:bottom-6 lg:left-6">
             {photos.length > 0 && (

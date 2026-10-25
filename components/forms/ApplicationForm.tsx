@@ -5,7 +5,6 @@ import { useActionState, useState } from "react";
 
 import { button } from "@/components/ui/button";
 import { sendApplication } from "@/lib/actions";
-import { positions } from "@/lib/careers";
 import { CV_MAX_BYTES, CV_TYPES, type ApplicationInputs } from "@/lib/schemas";
 import type { ActionResponse } from "@/types";
 
@@ -15,7 +14,7 @@ import { initialActionState, useActionToast } from "./useActionToast";
 const sources = ["Doporučení od známého", "Web / Google", "Sociální sítě", "Inzerát", "Jinak"];
 
 // Figma: Kariéra → Přihláška → Formulář (94:1225)
-export default function ApplicationForm({ defaultPosition }: { defaultPosition?: string }) {
+export default function ApplicationForm({ positions, defaultPosition }: { positions: string[]; defaultPosition?: string }) {
   const [state, formAction, pending] = useActionState<ActionResponse<ApplicationInputs>, FormData>(sendApplication, initialActionState);
   useActionToast(state);
   // Životopis jde rovnou do e-mailu přes serverovou akci, velikost a typ se hlídají už tady

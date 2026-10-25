@@ -7,6 +7,7 @@ import { cache } from "react";
 import JsonLd from "@/components/JsonLd";
 import InquiryForm from "@/components/forms/InquiryForm";
 import Gallery from "@/components/property/Gallery";
+import Bullet from "@/components/ui/Bullet";
 import { button } from "@/components/ui/button";
 import MapEmbed from "@/components/ui/MapEmbed";
 import PropertyCard from "@/components/ui/PropertyCard";
@@ -90,6 +91,7 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
     .slice(0, 3);
 
   const sections = (reality.sections ?? []).filter((s) => s?._type === "textWithImage");
+  const features = (reality.features ?? []).map((f) => f.trim()).filter(Boolean);
 
   return (
     <>
@@ -171,6 +173,19 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
               ))}
             </div>
 
+            {features.length > 0 && (
+              <>
+                <h2 className="mt-11 text-heading-s text-ink-900">Vybavení a přednosti</h2>
+                <ul className="mt-5 grid gap-x-10 gap-y-4 md:grid-flow-col md:grid-cols-2" style={{ gridTemplateRows: `repeat(${Math.ceil(features.length / 2)}, auto)` }}>
+                  {features.map((f) => (
+                    <Bullet key={f} size="m">
+                      {f}
+                    </Bullet>
+                  ))}
+                </ul>
+              </>
+            )}
+
             {params1.length + params2.length > 0 && (
               <>
                 <h2 className="mt-11 text-heading-s text-ink-900">Parametry nemovitosti</h2>
@@ -190,7 +205,7 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
             )}
 
             <h2 className="mt-12 text-heading-s text-ink-900">Kdo nemovitost prodává</h2>
-            <div className="mt-5 grid gap-5 md:grid-cols-2">
+            <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
               {agents.map((a) => (
                 <div key={a.name} className="flex flex-col rounded border border-line-200 p-6">
                   <div className="flex items-center gap-[14px]">
@@ -208,7 +223,7 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
                     </a>
                   )}
                   {a.email && (
-                    <a href={`mailto:${a.email}`} className="mt-1 text-body-s text-ink-500 hover:text-navy-900">
+                    <a href={`mailto:${a.email}`} className="mt-1 text-body-s [overflow-wrap:anywhere] text-ink-500 hover:text-navy-900">
                       {a.email}
                     </a>
                   )}
@@ -271,7 +286,7 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
               eyebrow="Mohlo by se hodit"
               title="Podobné nemovitosti"
               aside={
-                <Link href="/nemovitosti" className={`${button.ghost} hidden lg:inline-flex`}>
+                <Link href="/nemovitosti" className={`${button.ghost} max-lg:hidden`}>
                   Celá nabídka
                 </Link>
               }

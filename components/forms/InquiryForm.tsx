@@ -5,10 +5,10 @@ import { useActionState } from "react";
 
 import { button } from "@/components/ui/button";
 import { sendContactFromNemovitosti } from "@/lib/actions";
-import type { ContactNemovitostiType } from "@/lib/schemas";
+import { INQUIRY_TOPICS, type ContactNemovitostiType } from "@/lib/schemas";
 import type { ActionResponse } from "@/types";
 
-import { TextAreaField, TextField } from "./fields";
+import { SelectField, TextAreaField, TextField } from "./fields";
 import { initialActionState, useActionToast } from "./useActionToast";
 
 // Figma: Detail → Poptávkový formulář (50:1038)
@@ -22,6 +22,16 @@ export default function InquiryForm({ slug }: { slug: string }) {
   return (
     <form action={formAction} noValidate className="flex flex-col gap-[18px]">
       <input type="hidden" name="id" value={slug} />
+      <SelectField
+        idPrefix="inq-"
+        name="topic"
+        label="S čím vám můžeme pomoct?"
+        placeholder="Vyberte možnost"
+        options={[...INQUIRY_TOPICS]}
+        required
+        defaultValue={state.inputs?.topic ?? INQUIRY_TOPICS[0]}
+        error={state.errors?.topic?.[0]}
+      />
       <div className="flex flex-col gap-[18px] md:flex-row md:gap-4 [&>*]:flex-1">
         <TextField
           idPrefix="inq-"

@@ -148,6 +148,16 @@ export const realityType = defineType({
                 layout: "dropdown",
             }
         }),
+        // Figma: Detail → „Vybavení a přednosti“ (49:1021), dva sloupce s odrážkami
+        defineField({
+            name: "features",
+            title: "Vybavení a přednosti",
+            type: "array",
+            of: [{ type: "string" }],
+            description: "Krátké body, každý zvlášť. Např. „Krb s teplovodním výměníkem“, „Zastávka autobusu 200 m“. Ideálně 6–10 bodů.",
+            options: { layout: "list" },
+            validation: (rule) => rule.max(16).unique(),
+        }),
         defineField({
             name: "garage",
             title: "Garáž",

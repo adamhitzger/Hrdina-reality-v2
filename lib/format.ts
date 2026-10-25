@@ -31,3 +31,9 @@ export function formatPostcode(postcode?: string | null) {
 export function plural(n: number, [one, few, many]: [string, string, string]) {
   return `${n} ${n === 1 ? one : n >= 2 && n <= 4 ? few : many}`;
 }
+
+// Číslo stránky z ?strana= omezené na existující strany
+export function pageNumber(strana: string | string[] | undefined, count: number, perPage: number) {
+  const pages = Math.max(1, Math.ceil(count / perPage));
+  return { page: Math.min(pages, Math.max(1, Number(strana) || 1)), pages };
+}

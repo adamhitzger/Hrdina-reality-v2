@@ -137,6 +137,7 @@ export async function sendContact(
             fullname: formData.get("fullname") as string,
             email: formData.get("email") as string,
             phone: formData.get("phone") as string,
+            topic: formData.get("topic") as ContactNemovitostiType["topic"],
             msg: formData.get("msg") as string,
             id: formData.get("id") as string
         }

@@ -9,6 +9,8 @@ type Value = Parameters<typeof PortableText>[0]["value"];
 const components: Partial<PortableTextComponents> = {
   block: {
     normal: ({ children }) => <p className="text-body-m text-ink-500 [&+p]:mt-[14px]">{children}</p>,
+    // Nadpisy z textu ve Sanity jsou podřízené nadpisu stránky, h1 smí být na stránce jen jednou
+    h1: ({ children }) => <h3 className="mt-8 mb-3 text-title-m text-ink-900">{children}</h3>,
     h2: ({ children }) => <h3 className="mt-8 mb-3 text-title-m text-ink-900">{children}</h3>,
     h3: ({ children }) => <h3 className="mt-8 mb-3 text-title-m text-ink-900">{children}</h3>,
     h4: ({ children }) => <h4 className="mt-6 mb-2 text-title-s text-ink-900">{children}</h4>,

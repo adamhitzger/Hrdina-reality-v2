@@ -5,7 +5,7 @@ import { render } from "react-email";
 import KontaktEmail, { kontaktSubject } from "@/emails/kontakt";
 import PrihlaskaEmail, { prihlaskaSubject } from "@/emails/prihlaska";
 import PoptavkaNemovitostiEmail, { poptavkaSubject, type PoptavkaProperty } from "@/emails/poptavka-nemovitosti";
-import { roles } from "@/lib/careers";
+import { getOpenPositions } from "@/lib/careers";
 import type { ApplicationInputs, ContactNemovitostiType, ContactType } from "@/lib/schemas";
 import type { Reality } from "@/sanity/lib/interfaces";
 
@@ -38,7 +38,7 @@ export async function renderPoptavkaEmail(data: ContactNemovitostiType, reality:
 
 export async function renderPrihlaskaEmail(data: ApplicationInputs) {
   const fullname = `${data.firstname} ${data.lastname}`;
-  const role = roles.find((r) => r.title === data.position);
+  const role = (await getOpenPositions()).find((r) => r.title === data.position);
   const email = (
     <PrihlaskaEmail
       fullname={fullname}

@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "5mb",
     },
   },
+  // Podstránky měly na starém webu adresu /podstranky/…, teď jsou to články blogu
+  async redirects() {
+    return [{ source: "/podstranky/:slug", destination: "/blog/:slug", permanent: true }];
+  },
   images: {
     remotePatterns: [new URL("https://cdn.sanity.io/images/**")],
   },

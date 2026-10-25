@@ -1,22 +1,22 @@
 import JsonLd from "@/components/JsonLd";
 import ArticleCard from "@/components/blog/ArticleCard";
 import PageHero from "@/components/ui/PageHero";
-import { postAuthor, postCount, postMeta } from "@/lib/blog";
+import { headingCase, postAuthor, postCount, postExcerpt, postMeta } from "@/lib/blog";
 import { blogJsonLd, breadcrumbJsonLd } from "@/lib/json-ld";
 import { pageMetadata } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import type { PostCard } from "@/sanity/lib/interfaces";
+import type { ArticleCard as ArticleCardData } from "@/sanity/lib/interfaces";
 import { POSTS_QUERY } from "@/sanity/lib/queries";
 
 export const metadata = pageMetadata({
-  title: "Blog",
-  description: "Rady a novinky z realit na Vysočině: prodej, koupě, pronájem, financování a právo.",
+  title: "Blog – rady k prodeji, koupi a pronájmu",
+  description: "Průvodci od Hrdina Reality: jak prodat nemovitost, najít nový domov, pronajmout byt a investovat do nemovitostí na Vysočině.",
   path: "/blog",
 });
 
-// Figma blog nemá – výpis skládá karty článků z homepage (Rady a novinky)
+// Figma blog nemá – výpis skládá karty článků z homepage (Rady a novinky). Články jsou Podstránky ze Sanity.
 export default async function BlogPage() {
-  const posts = await sanityFetch<PostCard[]>({ query: POSTS_QUERY });
+  const posts = await sanityFetch<ArticleCardData[]>({ query: POSTS_QUERY });
 
   return (
     <>
@@ -40,9 +40,9 @@ export default async function BlogPage() {
                   href={`/blog/${p.slug}`}
                   image={p.imageUrl}
                   meta={postMeta(p)}
-                  title={p.title}
-                  text={p.excerpt}
-                  author={postAuthor(p)}
+                  title={headingCase(p.title)}
+                  text={postExcerpt(p)}
+                  author={postAuthor()}
                 />
               ))}
             </div>

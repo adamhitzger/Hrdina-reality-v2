@@ -6,7 +6,7 @@ export default function PagesLayout({ children }: LayoutProps<"/">) {
   return (
     <>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 overflow-x-hidden">{children}</main>
       <Footer />
       <ScrollReveal />
     </>

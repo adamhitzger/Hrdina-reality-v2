@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 
 import { loadOgAssets, og, OgLogo, ogSize } from "@/lib/og";
 import { client } from "@/sanity/lib/client";
@@ -7,7 +8,8 @@ import { REALITY_QUERY, REALITY_SLUGS_QUERY } from "@/sanity/lib/queries";
 
 export const alt = "Nemovitost – Hrdina Reality";
 export const size = ogSize;
-export const contentType = "image/png";
+// ImageResponse umí jen PNG, s fotkou má ~1 MB. Převod na JPEG ho zmenší zhruba na desetinu.
+export const contentType = "image/jpeg";
 
 export async function generateStaticParams() {
   const slugs = await client.fetch<string[]>(REALITY_SLUGS_QUERY);
@@ -24,7 +26,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const photo = reality?.imageUrl ? `${reality.imageUrl}?w=560&h=630&fit=crop&fm=jpg&q=80` : null;
   const specs = [reality?.type, reality?.area && `${reality.area} m²`, reality?.city].filter(Boolean).join(" · ");
 
-  return new ImageResponse(
+  const png = new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", background: og.surface50, fontFamily: "Montserrat" }}>
         {photo && (
@@ -47,4 +49,6 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     ),
     { ...size, fonts },
   );
+  const jpeg = await sharp(Buffer.from(await png.arrayBuffer())).jpeg({ quality: 82, mozjpeg: true }).toBuffer();
+  return new Response(new Uint8Array(jpeg), { headers: { "Content-Type": contentType } });
 }

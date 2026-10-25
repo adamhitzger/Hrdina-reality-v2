@@ -21,7 +21,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-body-s text-on-dark-muted lg:w-[340px]">
-              Realitní kancelář v Havlíčkově Brodě. Prodej, pronájem a výkup nemovitostí na Vysočině — už 19 let.
+              Realitní kancelář v Havlíčkově Brodě. Prodej a pronájem nemovitostí na Vysočině.
             </p>
           </div>
 
@@ -69,6 +69,9 @@ export default function Footer() {
         </div>
 
         <p className="mt-6 text-body-s text-on-dark-muted/70 lg:mt-5">
+          Provozuje {site.legal.company}, IČO {site.legal.ico}, DIČ {site.legal.dic}, sídlo {site.legal.seat}
+        </p>
+        <p className="mt-2 text-body-s text-on-dark-muted/70">
           Developed by{" "}
           <a href="https://apilab.cz" target="_blank" rel="noopener" className="underline-offset-2 hover:text-surface-0 hover:underline">
             Adam Hitzger

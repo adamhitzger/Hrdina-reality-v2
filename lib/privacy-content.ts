@@ -10,7 +10,7 @@ import { site } from "./site";
 export const PRIVACY_PATH = "/ochrana-osobnich-udaju";
 
 // Účinnost zásad – při změně textu posunout
-export const privacyEffectiveFrom = "6. 10. 2026";
+export const privacyEffectiveFrom = "25. 10. 2026";
 
 export type PrivacyBlock =
   | { type: "p"; text: string }
@@ -19,7 +19,7 @@ export type PrivacyBlock =
 
 export type PrivacySection = { id?: string; heading: string; blocks: PrivacyBlock[] };
 
-const { company, ico, seat, register, privacyEmail } = site.legal;
+const { company, ico, dic, seat, register, privacyEmail } = site.legal;
 
 // Co web skutečně zpracovává (podklad v TODO.md, sekce Ochrana osobních údajů)
 export const privacyForms = [
@@ -28,21 +28,21 @@ export const privacyForms = [
     data: "jméno a příjmení, e-mail, telefon, text zprávy",
     purpose: "odpověď na Váš dotaz a případné jednání o našich službách",
     basis: "jednání o smlouvě na Vaši žádost (čl. 6 odst. 1 písm. b) Nařízení GDPR) a oprávněný zájem odpovědět na dotaz (písm. f)",
-    retention: "po dobu vyřízení dotazu, nejdéle 3 roky od poslední komunikace",
+    retention: "po dobu vyřízení dotazu, nejdéle 1 rok od poslední komunikace",
   },
   {
     form: "Poptávka nemovitosti",
     data: "jméno a příjmení, e-mail, telefon, text zprávy a nemovitost, o kterou máte zájem",
     purpose: "domluva prohlídky a jednání o koupi nebo nájmu konkrétní nemovitosti",
     basis: "jednání o smlouvě na Vaši žádost (čl. 6 odst. 1 písm. b) Nařízení GDPR)",
-    retention: "po dobu jednání o nemovitosti, nejdéle 3 roky od poslední komunikace",
+    retention: "po dobu jednání o nemovitosti, nejdéle 1 rok od poslední komunikace",
   },
   {
     form: "Přihláška na Kariéře",
     data: "jméno a příjmení, e-mail, telefon, pozice, odkud jste se o nás dozvěděli, text o Vás a životopis s údaji, které v něm uvedete",
     purpose: "výběrové řízení na pozici, o kterou se ucházíte",
     basis: "Váš souhlas (čl. 6 odst. 1 písm. a) Nařízení GDPR), který můžete kdykoliv odvolat",
-    retention: "do konce výběrového řízení, nejdéle 6 měsíců; u přijatých uchazečů podle pracovněprávních předpisů",
+    retention: "do konce výběrového řízení, nejdéle 1 rok od doručení přihlášky; u přijatých uchazečů podle pracovněprávních předpisů",
   },
 ];
 
@@ -62,7 +62,7 @@ export const privacySections: PrivacySection[] = [
     blocks: [
       {
         type: "p",
-        text: `Správcem Vašich osobních údajů je ${company}, se sídlem ${seat}, IČO ${ico}, ${register}, která provozuje realitní kancelář ${site.name} (${site.address.street}, ${site.address.postalCode} ${site.address.city}) a tento web.`,
+        text: `Správcem Vašich osobních údajů je ${company}, se sídlem ${seat}, IČO ${ico}, DIČ ${dic}, ${register}, která provozuje realitní kancelář ${site.name} (${site.address.street}, ${site.address.postalCode} ${site.address.city}) a tento web.`,
       },
     ],
   },
@@ -139,7 +139,7 @@ export const privacySections: PrivacySection[] = [
       },
       {
         type: "p",
-        text: "Na detailu nemovitosti je vložená mapa Google Maps. Při jejím načtení společnost Google obdrží Vaši IP adresu a může ukládat vlastní cookies podle svých zásad (https://policies.google.com/privacy). Odkazy na Facebook a Instagram jsou obyčejné odkazy, dokud na ně nekliknete, nic se těmto službám neposílá. Používání cookies lze kdykoliv omezit v nastavení Vašeho internetového prohlížeče.",
+        text: "Na detailu nemovitosti, na stránce Kontakt a na stránce Realizované prodeje je vložená mapa Google Maps. Při jejím načtení společnost Google obdrží Vaši IP adresu a může ukládat vlastní cookies podle svých zásad (https://policies.google.com/privacy). Odkazy na Facebook a Instagram jsou obyčejné odkazy, dokud na ně nekliknete, nic se těmto službám neposílá. Používání cookies lze kdykoliv omezit v nastavení Vašeho internetového prohlížeče.",
       },
     ],
   },

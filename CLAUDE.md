@@ -14,7 +14,11 @@ Otevřené úkoly a rozpracované věci jsou v `TODO.md`.
 - `lib/content.ts`: statický obsah (FAQ, recenze, čísla, články, kontakty makléřů). Ten se upravuje tady, ne v komponentách.
 - `lib/site.ts`: firemní údaje (telefon, e-mail, adresa, sociální sítě) a `pageMetadata()` pro metadata podstránek.
 - `sanity/lib/queries.ts`: GROQ dotazy. `sanity/schemaTypes/`: schémata Studia.
+- `lib/careers.ts`: otevřené pozice na Kariéře, načítají se ze Sanity (typ `position`). Slug pozice je v odkazu `/kariera?pozice=…` a předvyplní výběr ve formuláři. Do schema.org (JobPosting) jdou jen pozice se zapnutým `jobPosting`.
+- OG obrázek detailu nemovitosti se vyrenderuje přes `ImageResponse` (PNG) a `sharp` ho převede na JPEG. `sharp` je proto v dependencies.
 - `components/forms/`: formuláře a `useActionToast`.
+- Blog = dokumenty „Podstránky“ (`page`) ze Sanity, jen ty se sekcí text s fotkou. Sekce renderuje `components/blog/ArticleSections.tsx`, nadpisy verzálkami a „HRDINA Reality“ srovnává `lib/blog.ts` při zobrazení.
+- Čísla a statistiky se při zobrazení napočítávají přes `components/ui/CountUp.tsx` (`<CountUp value="400+" />`).
 
 ## Konvence
 
@@ -25,6 +29,7 @@ Otevřené úkoly a rozpracované věci jsou v `TODO.md`.
 - Mapa je Google embed podle adresy. GPS ze Sanity se nepoužívají, protože jsou chybné.
 - Tailwind: `app/globals.css` má explicitní `@source` pro `app` a `components`, protože jinak nenacházel třídy v `app/(pages)`.
 - Server akce mají `bodySizeLimit: "11mb"` kvůli životopisu do 10 MB (`next.config.ts`).
+- Animace: při scrollu `data-reveal` (zdola), `data-reveal="fade"`, `="left"`/`="right"` (z boku, jen od lg), `="image"` (na rámeček s `overflow-hidden`, fotka se usadí). Sourozenci se automaticky řadí se zpožděním. Hero při načtení: `motion-safe:animate-fade-up` / `animate-fade-in` / `animate-hero-zoom`. CSS je v `app/globals.css`, při omezení pohybu se nic neanimuje.
 - Komentáře a texty v UI jsou česky.
 
 ## Ověření

@@ -2,10 +2,9 @@ import "server-only";
 
 import { groq } from "next-sanity";
 
-export const BOOK_QUERY = groq`*[_type == 'book'] | order(_createdAt desc) {
-  "frontUrl": front.asset->url,
-  "backUrl": back.asset->url
-}`;
+// Články blogu = Podstránky (typ `page`). Stránky jen s formulářem (bez textu s fotkou) článek nejsou.
+const ARTICLE_FILTER = `_type == "page" && defined(slug.current) && count(sections[_type == "textWithImage"]) > 0`;
+
 export const STAFF_QUERY = groq`*[_type == 'staff'] | order(poradi asc) {
   name,
   position,
@@ -21,18 +20,6 @@ export const REALITIES_QUERY = groq`*[_type == 'reality' && status == 'Na prodej
     price,
     "imageUrl": image.asset->url
   }`;
-
-  export const MAIN_SECTIONS = groq`*[_type == 'main'] | order(poradi asc){
-    textWithImage{
-        "textWithImageUrl": image.asset->url,
-        heading,
-        text,
-        button,
-        position,
-        image_pos,
-        heading_cap,
-    }
-  }`
 
   export const REALITY_QUERY = groq`*[_type == 'reality' && slug.current == $slug][0]{
     _createdAt,
@@ -69,6 +56,7 @@ export const REALITIES_QUERY = groq`*[_type == 'reality' && status == 'Na prodej
    material,
    type,
    equipment,
+   features,
    garage,
    parking,
    owner,
@@ -77,62 +65,16 @@ export const REALITIES_QUERY = groq`*[_type == 'reality' && status == 'Na prodej
    heating
    }`;
 
-   export const PAGES_QUERY = groq`*[_type == "page"]{
-    name,
-    "slug": slug.current,
-    heading,
-    "pageImageUrl": image.asset->url,
-   }`;
 
-   export const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0]{
-    name,
-    overview,
-    "slug": slug.current,
-    heading,
-    color,
-    "pageImageUrl": image.asset->url,
-    sections[]{
-      _type == "textWithImage" => {
-        _type,
-        "textWithImageUrl": image.asset->url,
-        heading,
-        text,
-        button,
-        position,
-        image_pos,
-        heading_cap,
-      },
-      _type == "heading" => {
-        _type,
-        text
-      },
-      _type == "steps" => {
-        _type,
-        steps[]{
-          "iconUrl": icon.asset->url,
-          number,
-          desc
-        }
-      },
-      _type == "button" => {
-        _type,
-        text,
-        url
-      },
-      _type == "accorditions" => {
-        _type,
-        accorditions[]{
-          heading,
-          text
-        }
-        },
-        _type == "form" => {
-        _type,
-        text,
-        heading
-      },
-      }
-    }`;
+// Poslední změna obsahu ze Sanity pro lastModified statických stránek v sitemapě
+export const SITEMAP_DATES_QUERY = groq`{
+  "active": *[_type == 'reality' && status in ['Na prodej', 'K pronájmu']] | order(_updatedAt desc)[0]._updatedAt,
+  "sold": *[_type == 'reality' && status == 'Prodáno'] | order(_updatedAt desc)[0]._updatedAt,
+  "reviews": *[_type == 'review'] | order(_updatedAt desc)[0]._updatedAt,
+  "staff": *[_type == 'staff'] | order(_updatedAt desc)[0]._updatedAt,
+  "positions": *[_type == 'position'] | order(_updatedAt desc)[0]._updatedAt,
+  "posts": *[${ARTICLE_FILTER}] | order(_updatedAt desc)[0]._updatedAt
+}`;
 
 export const SITEMAP_REALITIES_QUERY = groq`*[_type == 'reality' && defined(slug.current) && status != 'Storno'] | order(_updatedAt desc) {
   "slug": slug.current,
@@ -172,36 +114,66 @@ export const REVIEWS_QUERY = groq`*[_type == 'review' && defined(review)] | orde
   _id,
   review,
   clients,
+  deal,
   "imageUrl": image.asset->url
 }`;
 
-const POST_CARD = `
-  title,
+const ARTICLE_CARD = `
+  "title": coalesce(name, heading),
   "slug": slug.current,
-  publishedAt,
-  category,
-  excerpt,
-  "imageUrl": image.asset->url,
-  "author": author->name,
-  "words": length(string::split(pt::text(body), " "))
+  _createdAt,
+  _updatedAt,
+  overview,
+  "imageUrl": coalesce(image.asset->url, sections[_type == "textWithImage" && defined(image)][0].image.asset->url),
+  "intro": pt::text(sections[_type == "textWithImage"][0].text),
+  "words": length(string::split(pt::text(sections[].text[]), " "))
 `;
 
-export const POSTS_QUERY = groq`*[_type == 'post' && defined(slug.current)] | order(publishedAt desc) { ${POST_CARD} }`;
+export const POSTS_QUERY = groq`*[${ARTICLE_FILTER}] | order(_createdAt desc) { ${ARTICLE_CARD} }`;
 
-export const LATEST_POSTS_QUERY = groq`*[_type == 'post' && defined(slug.current)] | order(publishedAt desc)[0...3] { ${POST_CARD} }`;
+export const LATEST_POSTS_QUERY = groq`*[${ARTICLE_FILTER}] | order(_createdAt desc)[0...3] { ${ARTICLE_CARD} }`;
 
-export const POST_QUERY = groq`*[_type == 'post' && slug.current == $slug][0] {
-  ${POST_CARD},
-  _updatedAt,
-  body,
-  "authorPosition": author->position,
-  "authorImageUrl": author->image.asset->url
+export const POST_QUERY = groq`*[${ARTICLE_FILTER} && slug.current == $slug][0] {
+  ${ARTICLE_CARD},
+  heading,
+  sections[]{
+    _type,
+    _key,
+    _type == "textWithImage" => {
+      "imageUrl": image.asset->url,
+      "imageWidth": image.asset->metadata.dimensions.width,
+      "imageHeight": image.asset->metadata.dimensions.height,
+      heading,
+      text,
+      button,
+      position,
+      image_pos
+    },
+    _type == "heading" => { text },
+    _type == "steps" => { steps[]{ _key, number, desc } },
+    _type == "button" => { text, url },
+    _type == "accorditions" => { accorditions[]{ _key, heading, text } },
+    _type == "form" => { heading, text }
+  }
 }`;
 
-export const POST_SLUGS_QUERY = groq`*[_type == 'post' && defined(slug.current)].slug.current`;
+export const POST_SLUGS_QUERY = groq`*[${ARTICLE_FILTER}].slug.current`;
 
-export const SITEMAP_POSTS_QUERY = groq`*[_type == 'post' && defined(slug.current)] | order(publishedAt desc) {
+export const SITEMAP_POSTS_QUERY = groq`*[${ARTICLE_FILTER}] | order(_createdAt desc) {
   "slug": slug.current,
   _updatedAt,
   "imageUrl": image.asset->url
+}`;
+
+// Kariéra → Otevřené pozice (bez skrytých)
+export const OPEN_POSITIONS_QUERY = groq`*[_type == "position" && active != false] | order(coalesce(order, 999) asc, _createdAt asc) {
+  _createdAt,
+  _updatedAt,
+  title,
+  "slug": slug.current,
+  tag,
+  text,
+  employmentType,
+  datePosted,
+  jobPosting
 }`;
