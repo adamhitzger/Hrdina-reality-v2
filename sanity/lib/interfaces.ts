@@ -1,16 +1,16 @@
 import type { PortableTextBlock } from "next-sanity";
 type TypedObject = { _type: string; _key?: string };
 
-type Heating = "Ústřední topení" | "Tuhá paliva" | "Vlastní";
-type Water = "Dálkový odvod" | "Studna" | "Vlastní";
+type Heating = "Ústřední dálkové"| "Tuhá paliva"| "Plynové"|"Elektrické"| "Tepenné čerpadlo"| "Lokální"
+type Water = "Dálkový vodovod" | "Studna" | "Vlastní";
 type Condition = "Velmi pěkný" | "Pěkný" | "Špatný" | "Velmi špatný";
-type Material = "Cihlová" | "Dřevostavba";
-type Owner = "Vlastní" | "Družstvo";
+type Material = "Cihlová" | "Dřevostavba" | "Betenová" | "Kamenná" |"Smíšená";
+type Owner = "Osobní" | "Družstevní" | "Jiné";
 type Gargae = "Ano" | "Ne";
-type Parking = "Venkovní" | "Vnitřní" | "Žádné";
+type Parking = "Venkovní"| "Vnitřní"| "Žádné"| "Na pozemku"| "Na ulici";
 type Equipment = "Kompletní" | "Částečné" | "Žádné";
 type Type = "Byt" |"Rodinný dům" | "Chata" | "Chalupa" | "Pozemek";
-type Status =  "Na prodej" | "K pronájmu" | "Prodáno" | "Storno";
+type Status =  "Na prodej" | "K pronájmu" | "Prodáno" | "Rezervace" | "Pronajato";
 export interface TextWithImageSection {
     _type: "textWithImage" | undefined;
     textWithImageUrl: string;
@@ -60,7 +60,7 @@ export interface Reality {
     houseUrl: string
     price: string;
     area: number;
-    geopoint: {
+    geopoint?: {
         _type: string;
         lng: number;
         lat: number;
@@ -140,4 +140,19 @@ export interface OpenPosition {
   employmentType?: string[];
   datePosted?: string;
   jobPosting?: boolean;
+}
+
+// Fotky stránek (URL ze Sanity, null když ve Studiu chybí)
+export interface HomePhotos {
+  hero: string | null;
+  tileAbout: string | null;
+  tileReviews: string | null;
+  tileSold: string | null;
+  about: string | null;
+  career: string | null;
+}
+
+export interface AboutPhotos {
+  hero: string | null;
+  story: string | null;
 }

@@ -19,7 +19,7 @@ Stav k 5. 10. 2026: všech 8 stránek je převedených z Figmy (desktop i mobil)
 - [ ] Patička: Figma má „Prodej, pronájem a výkup nemovitostí na Vysočině — už 19 let.“, web má „Prodej a pronájem nemovitostí na Vysočině.“ (výkup se změnil na tržní odhady). Rozhodnout s klientem.
 - [ ] Čísla 400+, 38 dní, 4,9 ★ a 127 hodnocení a recenze jsou převzaté z Figmy. Ověřit, že odpovídají skutečnosti.
 - [ ] Doplnit do Sanity další nemovitosti. Teď je aktivní jen jedna, takže se na detailu skrývá sekce „Podobné nemovitosti“.
-- [ ] Opravit GPS souřadnice u inzerátu v Sanity, ukazují do Francie. Mapa teď hledá podle adresy.
+- [ ] Polohy v Sanity: „Příležitost usadit se… (Okrouhlice)“ má bod ve Francii a „Stavební pozemek kousek od HB“ má 0,0. Web je ignoruje a hledá podle adresy (u pozemku jen střed obce). Klient může bod umístit na mapě ve Studiu.
 
 - [ ] Služba 03 se na O nás ve Figmě přejmenovala na „Tržní odhady“, ale popis a odrážky pořád mluví o výkupu (peníze do 48 h, exekuce). Potřeba nový text. Skrytý panel „Služby“ na homepage ve Figmě má pořád „Výkup za hotové“.
 - [ ] Fotky v nízkém rozlišení, chtít originály: hero Recenze (`hero-recenze.jpg`, jen 1050×1400 na výšku, na širokém pásu je rozmazaná), fotky v hlavičkách podstránek mají 1700–1900 px (na 1920 px / retině trochu měkké), dvě prodané nemovitosti v Sanity mají fotky jen 450×337 a 500×374.

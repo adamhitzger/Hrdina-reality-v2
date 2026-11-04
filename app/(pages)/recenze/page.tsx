@@ -1,4 +1,5 @@
 import JsonLd from "@/components/JsonLd";
+import ReviewText from "@/components/reviews/ReviewText";
 import ReviewPhoto from "@/components/reviews/ReviewPhoto";
 import PageHero from "@/components/ui/PageHero";
 import Pagination from "@/components/ui/Pagination";
@@ -67,7 +68,7 @@ export default async function RecenzePage({ searchParams }: PageProps<"/recenze"
                 <p aria-label="5 z 5 hvězd" className="text-body-m text-brass-500">
                   ★★★★★
                 </p>
-                <blockquote className="mt-4 text-body-m whitespace-pre-line text-ink-700">{r.review.length < 250 ? r.review : r.review.substring(0,249) + "..."}</blockquote>
+                <ReviewText text={r.review} />
                 {r.imageUrl && (
                   <div className="mt-4">
                     <ReviewPhoto src={r.imageUrl} name={r.clients} />

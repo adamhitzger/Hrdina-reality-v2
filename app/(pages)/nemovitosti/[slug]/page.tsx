@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { stegaClean } from "next-sanity";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -82,12 +83,13 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
   ].filter(([, v]) => v);
 
   // Makléř z inzerátu + majitel kanceláře (Figma: „Kdo nemovitost prodává“)
-  const agentNames = [...new Set([reality.author ?? defaultAuthor, defaultAuthor])];
-  const agents = agentNames.map((n) => ({ name: n, staff: staff.find((s) => s.name === n), ...agentContacts[n] }));
+  // Jména se porovnávají vyčištěná od stega (v náhledu ve Studiu by jinak vyšel Lukáš dvakrát, jednou bez fotky)
+  const agentNames = [...new Set([stegaClean(reality.author) ?? defaultAuthor, defaultAuthor])];
+  const agents = agentNames.map((n) => ({ name: n, staff: staff.find((s) => stegaClean(s.name) === n), ...agentContacts[n] }));
 
   const similar = active
     .filter((r) => r.slug !== slug)
-    .sort((a, b) => Number(b.type === reality.type) - Number(a.type === reality.type))
+    .sort((a, b) => Number(stegaClean(b.type) === stegaClean(reality.type)) - Number(stegaClean(a.type) === stegaClean(reality.type)))
     .slice(0, 3);
 
   const sections = (reality.sections ?? []).filter((s) => s?._type === "textWithImage");
@@ -275,7 +277,7 @@ export default async function NemovitostPage({ params }: PageProps<"/nemovitosti
             <div className="h-[2px] w-10 bg-brass-500 lg:w-12" />
             <p className="mt-[18px] text-label-s text-brass-500 lg:text-label-m">Lokalita</p>
             <h2 className="mt-[14px] text-heading-s text-ink-900">Kde nemovitost najdete</h2>
-            <MapEmbed query={fullAddress || reality.city} label={address || reality.city} className="mt-7 h-[300px] lg:h-[440px]" />
+            <MapEmbed point={reality.geopoint} query={[fullAddress, [reality.street, reality.city].filter(Boolean).join(", "), reality.city ?? ""]} label={address || reality.city} className="mt-7 h-[300px] lg:h-[440px]" />
           </div>
         </section>
       )}

@@ -10,7 +10,8 @@ import { accordition } from './accordition'
 import { form } from './form'
 import { reviewType } from './reviewType'
 import { positionType } from './positionType'
+import { aboutPhotosType, contactPhotosType, homePhotosType, propertiesPhotosType, soldPhotosType } from './pagePhotos'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [realityType, staffType, pageType, textWithImage, heading, steps, button, accordition, form, reviewType, positionType],
+  types: [realityType, staffType, pageType, textWithImage, heading, steps, button, accordition, form, reviewType, positionType, homePhotosType, propertiesPhotosType, aboutPhotosType, contactPhotosType, soldPhotosType],
 }

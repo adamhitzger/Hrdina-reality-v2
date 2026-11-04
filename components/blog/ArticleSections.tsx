@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { PortableTextBlock } from "next-sanity";
+import { stegaClean, type PortableTextBlock } from "next-sanity";
 import { Fragment, type ReactNode } from "react";
 
 import ContactForm from "@/components/forms/ContactForm";
@@ -96,8 +96,9 @@ const imageWidth = {
 } as const;
 
 function TextWithImage({ s }: { s: Section<"textWithImage"> }) {
-  const imageLeft = s.position === "Obrázek vlevo";
-  const width = imageWidth[s.image_pos ?? "1/4 sekce"] ?? imageWidth["1/4 sekce"];
+  // V draft módu / Vercel preview nese stega v řetězcích neviditelné znaky, porovnání by vždy selhalo
+  const imageLeft = stegaClean(s.position) === "Obrázek vlevo";
+  const width = imageWidth[stegaClean(s.image_pos) ?? "1/4 sekce"] ?? imageWidth["1/4 sekce"];
 
   return (
     <div className={`flex flex-col gap-8 lg:items-center lg:gap-16 ${imageLeft ? "lg:flex-row" : "lg:flex-row-reverse"}`}>

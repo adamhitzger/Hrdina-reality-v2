@@ -1,3 +1,6 @@
+import { stegaClean } from "next-sanity";
+
+import { isInCzechia } from "@/lib/geo";
 import type { Article, ArticleCard, OpenPosition, Reality, Staff } from "@/sanity/lib/interfaces";
 
 import { headingCase, postExcerpt } from "./blog";
@@ -237,12 +240,12 @@ export function realityJsonLd(r: Reality) {
       "@type": "Offer",
       ...(price ? { price, priceCurrency: "CZK" } : {}),
       businessFunction:
-        r.status === "K pronájmu" ? "http://purl.org/goodrelations/v1#LeaseOut" : "http://purl.org/goodrelations/v1#Sell",
-      availability: r.status === "Prodáno" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+        stegaClean(r.status) === "K pronájmu" ? "http://purl.org/goodrelations/v1#LeaseOut" : "http://purl.org/goodrelations/v1#Sell",
+      availability: stegaClean(r.status) === "Prodáno" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
       offeredBy: { "@id": organizationId },
     },
     about: {
-      "@type": residenceType[r.type] ?? "Accommodation",
+      "@type": residenceType[stegaClean(r.type)] ?? "Accommodation",
       name: r.name.trim(),
       address: {
         "@type": "PostalAddress",
@@ -251,7 +254,7 @@ export function realityJsonLd(r: Reality) {
         postalCode: r.postcode,
         addressCountry: "CZ",
       },
-      ...(r.geopoint ? { geo: { "@type": "GeoCoordinates", latitude: r.geopoint.lat, longitude: r.geopoint.lng } } : {}),
+      ...(isInCzechia(r.geopoint) ? { geo: { "@type": "GeoCoordinates", latitude: r.geopoint.lat, longitude: r.geopoint.lng } } : {}),
       ...(r.area ? { floorSize: { "@type": "QuantitativeValue", value: r.area, unitCode: "MTK" } } : {}),
       ...(r.features?.length
         ? { amenityFeature: r.features.map((f) => ({ "@type": "LocationFeatureSpecification", name: f.trim(), value: true })) }

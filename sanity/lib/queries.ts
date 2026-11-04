@@ -83,7 +83,7 @@ export const SITEMAP_REALITIES_QUERY = groq`*[_type == 'reality' && defined(slug
 }`;
 
 
-export const NEMOVITOSTI_QUERY = groq`*[_type == 'reality' && defined(slug.current) && status in ['Na prodej', 'K pronájmu']] | order(_createdAt desc) {
+export const NEMOVITOSTI_QUERY = groq`*[_type == 'reality' && defined(slug.current) && status in ['Na prodej', 'K pronájmu', 'Rezervace']] | order(_createdAt desc) {
   _createdAt,
   name,
   "slug": slug.current,
@@ -96,7 +96,7 @@ export const NEMOVITOSTI_QUERY = groq`*[_type == 'reality' && defined(slug.curre
   "imageUrl": image.asset->url
 }`;
 
-export const SOLD_REALITIES_QUERY = groq`*[_type == 'reality' && defined(slug.current) && status == 'Prodáno'] | order(_updatedAt desc) {
+export const SOLD_REALITIES_QUERY = groq`*[_type == 'reality' && defined(slug.current) && status in ['Prodáno', 'Pronajato']] | order(_updatedAt desc) {
   name,
   "slug": slug.current,
   overview,
@@ -110,7 +110,7 @@ export const SOLD_REALITIES_QUERY = groq`*[_type == 'reality' && defined(slug.cu
 
 export const REALITY_SLUGS_QUERY = groq`*[_type == 'reality' && defined(slug.current) && status != 'Storno'].slug.current`;
 
-export const REVIEWS_QUERY = groq`*[_type == 'review' && defined(review)] | order(_createdAt asc, _id asc) {
+export const REVIEWS_QUERY = groq`*[_type == 'review' && defined(review)] | order(_createdAt desc, _id asc) {
   _id,
   review,
   clients,
@@ -176,4 +176,21 @@ export const OPEN_POSITIONS_QUERY = groq`*[_type == "position" && active != fals
   employmentType,
   datePosted,
   jobPosting
+}`;
+
+// Fotky statických stránek (singletony z sanity/schemaTypes/pagePhotos.ts), jen URL. Chybějící fotka = null.
+export const HOME_PHOTOS_QUERY = groq`*[_id == "homePhotos"][0]{
+  "hero": hero.asset->url,
+  "tileAbout": tileAbout.asset->url,
+  "tileReviews": tileReviews.asset->url,
+  "tileSold": tileSold.asset->url,
+  "about": about.asset->url,
+  "career": career.asset->url,
+}`;
+
+export const HERO_PHOTO_QUERY = groq`*[_id == $id][0].hero.asset->url`;
+
+export const ABOUT_PHOTOS_QUERY = groq`*[_id == "aboutPhotos"][0]{
+  "hero": hero.asset->url,
+  "story": story.asset->url,
 }`;

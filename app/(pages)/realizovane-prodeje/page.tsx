@@ -10,6 +10,7 @@ import type { PropertyListItem } from "@/lib/property";
 import { listingMetadata, siteUrl } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { SOLD_REALITIES_QUERY } from "@/sanity/lib/queries";
+import { getHeroPhoto } from "@/lib/page-photos";
 import photoWindow from "@/public/images/photo-window.jpg";
 
 const PER_PAGE = 12;
@@ -30,7 +31,7 @@ export async function generateMetadata({ searchParams }: PageProps<"/realizovane
 const SOLD_MAP_ID = "1IUabbEENYXPNdODTzfsONVuY6qM9ohyM";
 
 export default async function RealizovaneProdejePage({ searchParams }: PageProps<"/realizovane-prodeje">) {
-  const [{ strana }, sold] = await Promise.all([searchParams, getSold()]);
+  const [{ strana }, sold, hero] = await Promise.all([searchParams, getSold(), getHeroPhoto("soldPhotos")]);
   const { page, pages } = pageNumber(strana, sold.length, PER_PAGE);
   const items = sold.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
@@ -53,7 +54,7 @@ export default async function RealizovaneProdejePage({ searchParams }: PageProps
         crumb="Realizované prodeje"
         title={TITLE}
         lead="Skutečné prodeje. Konkrétní výsledky."
-        image={photoWindow}
+        image={hero ?? photoWindow}
       />
 
       {/* Čísla (29:419) */}

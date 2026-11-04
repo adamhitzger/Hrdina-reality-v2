@@ -5,6 +5,7 @@ import PageHero from "@/components/ui/PageHero";
 import { telHref } from "@/lib/format";
 import { organizationId, pageJsonLd } from "@/lib/json-ld";
 import { pageMetadata, site } from "@/lib/site";
+import { getHeroPhoto } from "@/lib/page-photos";
 import heroKontakt from "@/public/images/hero-kontakt.jpg";
 
 const TITLE = "Kontakt – kancelář na Havlíčkově náměstí";
@@ -20,7 +21,8 @@ const rows: { label: string; value: string; href?: string }[] = [
   { label: "Mimo otevírací dobu", value: "Po telefonické domluvě i večer a o víkendu" },
 ];
 
-export default function KontaktPage() {
+export default async function KontaktPage() {
+  const hero = await getHeroPhoto("contactPhotos");
   const address = `${site.address.street}, ${site.address.city}`;
 
   return (
@@ -39,7 +41,7 @@ export default function KontaktPage() {
         crumb="Kontakt"
         title="Kontakt"
         lead="Každá nemovitost i každý klient mají svůj příběh. Rádi si vyslechneme ten váš a pomůžeme vám najít nejlepší cestu dál. Zastavte se za námi na Havlíčkově náměstí, zavolejte nebo napište. Setkání je nezávazné a zdarma."
-        image={heroKontakt}
+        image={hero ?? heroKontakt}
       />
 
       {/* Kontakt — obsah (32:641) */}
@@ -81,7 +83,7 @@ export default function KontaktPage() {
 
       {/* Mapa (32:691) */}
       <section className="bg-surface-0">
-        <MapEmbed query={`${address}, ${site.address.postalCode}`} label={address} className="h-[300px] rounded-none lg:h-[440px]" />
+        <MapEmbed point={{ lat: site.geo.latitude, lng: site.geo.longitude }} query={`${address}, ${site.address.postalCode}`} label={address} className="h-[300px] rounded-none lg:h-[440px]" />
       </section>
     </>
   );

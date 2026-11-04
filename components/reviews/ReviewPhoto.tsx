@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-// „Více“ u recenze → fotka ručně psané recenze přes celou obrazovku (stejný lightbox jako Gallery)
+// „Ručně psaný originál“ u recenze → fotka ručně psané recenze přes celou obrazovku (stejný lightbox jako Gallery)
 export default function ReviewPhoto({ src, name }: { src: string; name: string }) {
   const [open, setOpen] = useState(false);
 
@@ -21,7 +21,7 @@ export default function ReviewPhoto({ src, name }: { src: string; name: string }
   return (
     <>
       <button type="button" onClick={() => setOpen(true)} className="self-start text-label-m whitespace-pre text-brass-600 hover:text-brass-500">
-        {"Více  →"}
+        {"Ručně psaný originál  →"}
       </button>
 
       {open && (

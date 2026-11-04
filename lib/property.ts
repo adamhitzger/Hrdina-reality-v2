@@ -1,3 +1,5 @@
+import { stegaClean } from "next-sanity";
+
 import { formatArea, formatPrice, formatSpecs } from "./format";
 
 export type Badge = { label: string; tone: "brass" | "navy" };
@@ -17,8 +19,12 @@ export interface PropertyListItem {
 const NEW_DAYS = 30;
 
 export function propertyBadge(p: Pick<PropertyListItem, "status" | "_createdAt">): Badge | undefined {
-  if (p.status === "Prodáno") return { label: "Prodáno", tone: "navy" };
-  if (p.status === "K pronájmu") return { label: "Pronájem", tone: "brass" };
+  // V draft módu nese stega v řetězcích neviditelné znaky, porovnává se proto vyčištěná hodnota
+  const status = stegaClean(p.status);
+  if (status === "Prodáno") return { label: "Prodáno", tone: "navy" };
+  if (status === "Pronajato") return { label: "Pronajato", tone: "navy" };
+  if (status === "Rezervace") return { label: "Rezervováno", tone: "navy" };
+  if (status === "K pronájmu") return { label: "Pronájem", tone: "brass" };
   if (p._createdAt && Date.now() - new Date(p._createdAt).getTime() < NEW_DAYS * 864e5) {
     return { label: "Novinka", tone: "brass" };
   }

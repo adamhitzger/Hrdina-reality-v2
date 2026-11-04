@@ -14,6 +14,7 @@ Otevřené úkoly a rozpracované věci jsou v `TODO.md`.
 - `lib/content.ts`: statický obsah (FAQ, recenze, čísla, články, kontakty makléřů). Ten se upravuje tady, ne v komponentách.
 - `lib/site.ts`: firemní údaje (telefon, e-mail, adresa, sociální sítě) a `pageMetadata()` pro metadata podstránek.
 - `sanity/lib/queries.ts`: GROQ dotazy. `sanity/schemaTypes/`: schémata Studia.
+- Fotky stránek (homepage, Nemovitosti, O nás, Kontakt, Realizované prodeje) jsou ve Studiu v sekci „Fotky stránek“: singletony `homePhotos`, `propertiesPhotos`, `aboutPhotos`, `contactPhotos`, `soldPhotos` (`_id` = typ, `sanity/schemaTypes/pagePhotos.ts`). Soubory v `public/images` jsou jen záloha, když fotka v Sanity chybí. Po změně schématu `npx sanity schema deploy`, jinak MCP/API nové typy nezná.
 - `lib/careers.ts`: otevřené pozice na Kariéře, načítají se ze Sanity (typ `position`). Slug pozice je v odkazu `/kariera?pozice=…` a předvyplní výběr ve formuláři. Do schema.org (JobPosting) jdou jen pozice se zapnutým `jobPosting`.
 - OG obrázek detailu nemovitosti se vyrenderuje přes `ImageResponse` (PNG) a `sharp` ho převede na JPEG. `sharp` je proto v dependencies.
 - `components/forms/`: formuláře a `useActionToast`.
@@ -26,7 +27,9 @@ Otevřené úkoly a rozpracované věci jsou v `TODO.md`.
 - Každé nové pole ve formuláři musí být i ve schématu a v akci, jinak se hodnota ztratí.
 - Ceny se formátují jako „4 350 000 Kč“ (`lib/format.ts`).
 - Stránkování výpisů je přes `?strana=`.
-- Mapa je Google embed podle adresy. GPS ze Sanity se nepoužívají, protože jsou chybné.
+- Mapa (`components/ui/MapEmbed.tsx`) je embed OpenStreetMap, Google embed bez klíče prohlížeče blokovaly. Bere bod `geopoint` ze Sanity, když leží v Česku (`lib/geo.ts`), jinak adresu dohledá přes Nominatim (cache 30 dní). Bod se ve Studiu vybírá na mapě (`sanity/components/GeopointMapInput.tsx`, Leaflet + OSM, tlačítko „Najít podle adresy“).
+- Náhled ve Studiu (Presentation): draft mode zapíná `/api/draft-mode/enable`, `<VisualEditing />` v `app/(pages)/layout.tsx` přidá rámečky „klikni a uprav“ a po změně konceptu stránku obnoví. V draft módu jsou v textech ze Sanity neviditelné stega znaky, proto se hodnoty před porovnáním čistí přes `stegaClean` (status, typ, pozice obrázku…). Live Content API (`defineLive`) se záměrně nepoužívá, veřejný web se obnovuje po 30 s.
+- Recenze: `review-book-*` = rukou psané z knihy (s fotkou), `review-web-*` = převzaté z lukashrdina.cz/reference (2026-11-04).
 - Tailwind: `app/globals.css` má explicitní `@source` pro `app` a `components`, protože jinak nenacházel třídy v `app/(pages)`.
 - Server akce mají `bodySizeLimit: "11mb"` kvůli životopisu do 10 MB (`next.config.ts`).
 - Animace: při scrollu `data-reveal` (zdola), `data-reveal="fade"`, `="left"`/`="right"` (z boku, jen od lg), `="image"` (na rámeček s `overflow-hidden`, fotka se usadí). Sourozenci se automaticky řadí se zpožděním. Hero při načtení: `motion-safe:animate-fade-up` / `animate-fade-in` / `animate-hero-zoom`. CSS je v `app/globals.css`, při omezení pohybu se nic neanimuje.

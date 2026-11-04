@@ -17,8 +17,8 @@ import { faqJsonLd, pageJsonLd } from "@/lib/json-ld";
 import { propertyCardProps, type PropertyListItem } from "@/lib/property";
 import { pageMetadata, site, siteUrl } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import type { ArticleCard as ArticleCardData } from "@/sanity/lib/interfaces";
-import { LATEST_POSTS_QUERY, NEMOVITOSTI_QUERY } from "@/sanity/lib/queries";
+import type { ArticleCard as ArticleCardData, HomePhotos } from "@/sanity/lib/interfaces";
+import { HOME_PHOTOS_QUERY, LATEST_POSTS_QUERY, NEMOVITOSTI_QUERY } from "@/sanity/lib/queries";
 import aboutMeeting from "@/public/images/about-meeting.jpg";
 import heroImage from "@/public/images/hero-home.jpg";
 import photoLukas from "@/public/images/photo-lukas.jpg";
@@ -34,11 +34,14 @@ const introText =
   "Každý klient je pro nás důležitý. Každá nemovitost má svůj příběh. Seznamte se s námi, přečtěte si zkušenosti našich klientů a zjistěte, jak vám můžeme pomoci.";
 
 export default async function HomePage() {
-  const [allRealities, posts] = await Promise.all([
+  const [allRealities, posts, photos] = await Promise.all([
     sanityFetch<PropertyListItem[]>({ query: NEMOVITOSTI_QUERY }),
     sanityFetch<ArticleCardData[]>({ query: LATEST_POSTS_QUERY }),
+    sanityFetch<HomePhotos | null>({ query: HOME_PHOTOS_QUERY }),
   ]);
   const realities = allRealities.slice(0, 6);
+  // Fotky ze Sanity (Fotky stránek → Homepage), soubory z public/images jsou jen záloha
+  const tilePhotos = [photos?.tileAbout, photos?.tileReviews, photos?.tileSold];
 
   return (
     <>
@@ -52,7 +55,7 @@ export default async function HomePage() {
       />
       {/* 01 · Hero (4:64 / 35:681) */}
       <section className="relative flex min-h-[600px] items-end overflow-hidden lg:min-h-[760px]">
-        <Image src={heroImage} alt="" fill priority sizes="(max-width: 767px) 240vw, 100vw" className="object-cover motion-safe:animate-hero-zoom" />
+        <Image src={photos?.hero ?? heroImage} alt="" fill priority sizes="(max-width: 767px) 240vw, 100vw" className="object-cover motion-safe:animate-hero-zoom" />
         <div
           aria-hidden
           className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,31,64,0.55)_0%,rgba(2,31,64,0.6)_35%,rgba(2,31,64,0.95)_100%)] lg:bg-[linear-gradient(180deg,rgba(2,31,64,0.42)_0%,rgba(2,31,64,0.08)_35%,rgba(2,31,64,0.48)_100%),linear-gradient(90deg,rgba(2,31,64,0.94)_0%,rgba(2,31,64,0.58)_50%,rgba(2,31,64,0.1)_100%)]"
@@ -112,15 +115,16 @@ export default async function HomePage() {
                 {
                   label: "O Hrdina reality",
                   panel: (
-                    <div className="grid gap-7 md:grid-cols-3 lg:gap-6">
-                      {aboutTiles.map((tile) => (
-                        <article key={tile.title} data-reveal className="flex flex-col">
+                    // Subgrid: fotka, nadpis, text a tlačítko sdílí řádky napříč dlaždicemi, tlačítka jsou v jedné linii
+                    <div className="grid gap-7 md:grid-cols-3 md:gap-x-6 md:gap-y-0">
+                      {aboutTiles.map((tile, i) => (
+                        <article key={tile.title} data-reveal className="flex flex-col md:row-span-4 md:grid md:grid-rows-subgrid">
                           <div className="relative h-[250px] overflow-hidden rounded-t lg:h-[300px]">
-                            <Image src={tile.image} alt="" fill sizes="(min-width: 1024px) 384px, 100vw" className="object-cover" />
+                            <Image src={tilePhotos[i] ?? tile.image} alt="" fill sizes="(min-width: 1024px) 384px, 100vw" className="object-cover" />
                           </div>
                           <h3 className="mt-[22px] text-heading-s text-ink-900">{tile.title}</h3>
                           <p className="mt-2.5 text-body-m text-ink-500">{tile.text}</p>
-                          <Link href={tile.href} className={`${button.ghost} mt-[18px] self-start px-[22px] py-[13px]`}>
+                          <Link href={tile.href} className={`${button.ghost} mt-[18px] self-start justify-self-start px-[22px] py-[13px]`}>
                             Zjistit více
                           </Link>
                         </article>
@@ -180,7 +184,7 @@ export default async function HomePage() {
       <section className="bg-navy-900">
         <div className="container-site flex flex-col lg:min-h-[560px] lg:flex-row">
           <div data-reveal="image" className="relative h-[260px] overflow-hidden md:h-[440px] lg:h-auto lg:w-[46%] lg:shrink-0 xl:w-[660px]">
-            <Image src={aboutMeeting} alt="" fill sizes="(min-width: 1280px) 660px, (min-width: 1024px) 46vw, 100vw" className="object-cover object-[50%_25%] lg:object-center" />
+            <Image src={photos?.about ?? aboutMeeting} alt="" fill sizes="(min-width: 1280px) 660px, (min-width: 1024px) 46vw, 100vw" className="object-cover object-[50%_25%] lg:object-center" />
           </div>
           <div data-reveal="right" className="flex flex-col justify-center px-6 pt-14 pb-16 lg:py-24 lg:pr-12 lg:pl-12 xl:pr-[120px] xl:pl-[88px]">
             <p className="text-label-s text-brass-300 lg:text-label-m">O nás</p>
@@ -279,7 +283,7 @@ export default async function HomePage() {
               </Link>
             </div>
             <div data-reveal="image" className="relative h-[230px] overflow-hidden md:h-[400px] lg:h-[386px] lg:w-[46%] lg:shrink-0 xl:w-[552px]">
-              <Image src={photoLukas} alt="" fill sizes="(min-width: 1280px) 552px, (min-width: 1024px) 42vw, 100vw" className="object-cover object-[50%_38%] lg:object-[50%_65%]" />
+              <Image src={photos?.career ?? photoLukas} alt="" fill sizes="(min-width: 1280px) 552px, (min-width: 1024px) 42vw, 100vw" className="object-cover object-[50%_38%] lg:object-[50%_65%]" />
             </div>
           </div>
         </div>

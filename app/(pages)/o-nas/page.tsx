@@ -1,3 +1,4 @@
+import { stegaClean } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,8 +11,8 @@ import { telHref } from "@/lib/format";
 import { organizationId, pageJsonLd, staffJsonLd } from "@/lib/json-ld";
 import { pageMetadata, site } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import type { Staff } from "@/sanity/lib/interfaces";
-import { STAFF_QUERY } from "@/sanity/lib/queries";
+import type { AboutPhotos, Staff } from "@/sanity/lib/interfaces";
+import { ABOUT_PHOTOS_QUERY, STAFF_QUERY } from "@/sanity/lib/queries";
 import heroONas from "@/public/images/hero-o-nas.jpg";
 import photoLukas from "@/public/images/photo-lukas.jpg";
 
@@ -22,7 +23,10 @@ const DESCRIPTION =
 export const metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/o-nas" });
 
 export default async function ONasPage() {
-  const staff = await sanityFetch<Staff[]>({ query: STAFF_QUERY });
+  const [staff, photos] = await Promise.all([
+    sanityFetch<Staff[]>({ query: STAFF_QUERY }),
+    sanityFetch<AboutPhotos | null>({ query: ABOUT_PHOTOS_QUERY }),
+  ]);
 
   return (
     <>
@@ -37,7 +41,7 @@ export default async function ONasPage() {
           extra: staffJsonLd(staff, agentContacts),
         })}
       />
-      <PageHero crumb="O nás" title="O nás" lead="Reality s osobním přístupem. Výsledky, na kterých záleží." image={heroONas} />
+      <PageHero crumb="O nás" title="O nás" lead="Reality s osobním přístupem. Výsledky, na kterých záleží." image={photos?.hero ?? heroONas} />
 
       {/* Můj příběh (31:591) */}
       <section className="bg-surface-0">
@@ -66,7 +70,7 @@ export default async function ONasPage() {
             </div>
           </div>
           <div data-reveal="image" className="relative h-[440px] overflow-hidden rounded lg:aspect-[612/765] lg:h-auto lg:w-[46%] lg:shrink-0 xl:w-[612px]">
-            <Image src={photoLukas} alt="Lukáš Hrdina v kanceláři Hrdina Reality" fill sizes="(min-width: 1280px) 612px, (min-width: 1024px) 42vw, 100vw" className="object-cover" />
+            <Image src={photos?.story ?? photoLukas} alt="Lukáš Hrdina v kanceláři Hrdina Reality" fill sizes="(min-width: 1280px) 612px, (min-width: 1024px) 42vw, 100vw" className="object-cover" />
           </div>
         </div>
       </section>
@@ -125,7 +129,7 @@ export default async function ONasPage() {
           <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Lidé, na které se dovoláte</h2>
           <div className="mt-10 grid gap-10 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-x-[30px] lg:gap-y-14">
             {staff.map((s) => {
-              const contact = agentContacts[s.name];
+              const contact = agentContacts[stegaClean(s.name)];
               return (
                 <article key={s.name} data-reveal className="flex flex-col">
                   <div className="relative h-[380px] overflow-hidden rounded bg-surface-100 lg:h-[420px]">

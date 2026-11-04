@@ -1,5 +1,8 @@
 import { defineType, defineField, defineArrayMember } from "sanity"
 
+import { isInCzechia } from "../../lib/geo"
+import { GeopointMapInput } from "../components/GeopointMapInput"
+
 export const realityType = defineType({
     name: "reality",
     title: "Nové nemovitosti",
@@ -69,7 +72,10 @@ export const realityType = defineType({
             of: [
                 {type: "image",
                 }
-            ]
+            ],
+            options: {
+    layout: 'grid',
+  },
         }),
         defineField({
             name: "sections",
@@ -106,13 +112,19 @@ export const realityType = defineType({
             name: "geopoint",
             title: "Lokace",
             type: "geopoint",
+            description: "Poloha na mapě v detailu nemovitosti. Klikněte do mapy, přetáhněte špendlík, nebo použijte „Najít podle adresy“. Bez polohy se mapa hledá podle adresy.",
+            components: { input: GeopointMapInput },
+            validation: (rule) =>
+                rule.custom((p?: { lat?: number; lng?: number }) =>
+                    !p || isInCzechia(p) ? true : "Bod leží mimo Česko, na webu se místo něj použije adresa.",
+                ).warning(),
         }),
         defineField({
             name: "status",
             title: "Status nemovitosti",
             type: "string",
             options: {
-                list: ["Na prodej", "K pronájmu", "Prodáno", "Storno"],
+                list: ["Na prodej", "K pronájmu", "Prodáno", "Rezervace" ,"Pronajato"],
                 layout: "dropdown",
             }
         }),
@@ -172,7 +184,7 @@ export const realityType = defineType({
             title: "Parkování",
             type: "string",
             options: {
-                list: ["Venkovní", "Vnitřní", "Žádné"],
+                list: ["Venkovní", "Vnitřní", "Žádné", "Na pozemku", "Na ulici"],
                 layout: "dropdown",
             }
         }),
@@ -181,16 +193,16 @@ export const realityType = defineType({
             title: "Vlastnictví",
             type: "string",
             options: {
-                list: ["Vlastní", "Družstvo"],
+                list: ["Osobní","Družstevní","Jiné"],
                 layout: "dropdown",
             }
         }),
         defineField({
             name: "material",
-            title: "Materiál stavby",
+            title: "Konstrukce stavby",
             type: "string",
             options: {
-                list: ["Cihlová", "Dřevostavba"],
+                list: ["Cihlová", "Dřevostavba", "Betenová", "Kamenná", "Smíšená"],
                 layout: "dropdown",
             }
         }),
@@ -208,16 +220,16 @@ export const realityType = defineType({
             title: "Voda",
             type: "string",
             options: {
-                list: ["Dálkový odvod", "Studna", "Vlastní"],
+                list: ["Dálkový vodovod", "Studna", "Vlastní"],
                 layout: "dropdown",
             }
         }),
         defineField({
             name: "heating",
-            title: "Topení",
+            title: "Vytápění",
             type: "string",
             options: {
-                list: ["Ústřední topení", "Tuhá paliva", "Vlastní"],
+                list: ["Ústřední dálkové", "Tuhá paliva", "Plynové","Elektrické", "Tepenné čerpadlo", "Lokální"],
                 layout: "dropdown",
             }
         }),

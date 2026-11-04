@@ -11,6 +11,7 @@ import { propertyCardProps, type PropertyListItem } from "@/lib/property";
 import { listingMetadata, siteUrl } from "@/lib/site";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { NEMOVITOSTI_QUERY } from "@/sanity/lib/queries";
+import { getHeroPhoto } from "@/lib/page-photos";
 import heroNemovitosti from "@/public/images/hero-nemovitosti.jpg";
 
 const PER_PAGE = 9;
@@ -34,7 +35,7 @@ function pluralize(n: number) {
 }
 
 export default async function NemovitostiPage({ searchParams }: PageProps<"/nemovitosti">) {
-  const [{ strana }, realities] = await Promise.all([searchParams, getRealities()]);
+  const [{ strana }, realities, hero] = await Promise.all([searchParams, getRealities(), getHeroPhoto("propertiesPhotos")]);
   const { page, pages } = pageNumber(strana, realities.length, PER_PAGE);
   const items = realities.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
@@ -53,7 +54,7 @@ export default async function NemovitostiPage({ searchParams }: PageProps<"/nemo
           extra: [itemListJsonLd(items, `${siteUrl}${pagePath}#list`, (page - 1) * PER_PAGE)],
         })}
       />
-      <PageHero crumb="Nemovitosti" title="Nemovitosti" lead="Aktuální nabídka domů, bytů, chalup a pozemků na Vysočině." image={heroNemovitosti} />
+      <PageHero crumb="Nemovitosti" title="Nemovitosti" lead="Aktuální nabídka domů, bytů, chalup a pozemků na Vysočině." image={hero ?? heroNemovitosti} />
 
       {/* Počet výsledků (21:137) */}
       <section className="bg-surface-0">

@@ -14,6 +14,7 @@ import {apiVersion, dataset, projectId} from './sanity/env'
 import {schema} from './sanity/schemaTypes'
 import {structure} from './sanity/structure'
 import {locate} from './sanity/presentation/locate'
+import {pagePhotoTypes} from './sanity/schemaTypes/pagePhotos'
 
 export default defineConfig({
   basePath: '/studio',
@@ -21,6 +22,15 @@ export default defineConfig({
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
+  // Fotky stránek jsou singletony: nejdou založit znovu, smazat ani duplikovat
+  document: {
+    newDocumentOptions: (prev, {creationContext}) =>
+      creationContext.type === 'global' ? prev.filter((t) => !pagePhotoTypes.includes(t.templateId)) : prev,
+    actions: (prev, {schemaType}) =>
+      pagePhotoTypes.includes(schemaType)
+        ? prev.filter(({action}) => action && ['publish', 'discardChanges', 'restore'].includes(action))
+        : prev,
+  },
   plugins: [
     structureTool({structure}),
     // Vision is for querying with GROQ from inside the Studio

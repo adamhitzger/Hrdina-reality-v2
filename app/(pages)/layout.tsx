@@ -1,14 +1,21 @@
+import { VisualEditing } from "next-sanity/visual-editing";
+import { draftMode } from "next/headers";
+
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import ScrollReveal from "@/components/ScrollReveal";
 
-export default function PagesLayout({ children }: LayoutProps<"/">) {
+export default async function PagesLayout({ children }: LayoutProps<"/">) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
   return (
     <>
       <Header />
       <main className="flex-1 overflow-x-hidden">{children}</main>
       <Footer />
       <ScrollReveal />
+      {/* Náhled ve Studiu (Presentation): rámečky „klikni a uprav“ a obnovení stránky po každé změně konceptu */}
+      {isDraftMode && <VisualEditing />}
     </>
   );
 }
