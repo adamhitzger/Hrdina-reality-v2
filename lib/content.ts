@@ -9,18 +9,18 @@ import photoWindow from "@/public/images/photo-window.jpg";
 export const services = [
   {
     title: "Prodej nemovitosti",
-    text: "Nastavíme cenu podle reálných prodejů v okolí, připravíme dům na focení a dovedeme obchod až ke katastru.",
+    text: "Nastavíme cenu podle reálných prodejů v okolí, připravíme dům na focení a dovedeme obchod až k převodu na katastru.",
     bullets: ["Odhad tržní ceny zdarma", "Profesionální foto a home staging", "Právní servis a advokátní úschova"],
   },
   {
     title: "Pronájem",
-    text: "Najdeme nájemníka, kterého si sami prověříme. Vy dostanete smlouvu, protokol a klid na práci.",
+    text: "Najdeme nájemníka, kterého si prověříme, a vy máte možnost se s ním potkat a odsouhlasit ho. Připravíme nájemní smlouvu a předávací protokol.",
     bullets: ["Prověření nájemníka", "Nájemní smlouva na míru", "Předání a předávací protokol"],
   },
   {
     title: "Tržní odhady",
-    text: "Když potřebujete peníze rychle. Vykoupíme nemovitost i s dluhy nebo exekucí — bez čekání na kupce.",
-    bullets: ["Nabídka do 48 hodin", "Vyplacení do 14 dnů", "Řešíme i exekuce a zástavy"],
+    text: "Potřebujete tržní odhad nemovitosti pro dědické řízení nebo snad finanční vyrovnání? Rádi vám tento odhad vypracujeme a připravíme.",
+    bullets: ["Osobní prohlídka nemovitosti", "Vypracování do 5 pracovních dnů"],
   },
 ];
 
@@ -162,4 +162,5 @@ export const applicationSteps = [
 // Kontakty makléřů nejsou v Sanity – ze zadání Figmy / existujících e-mailů
 export const agentContacts: Record<string, { phone?: string; email?: string }> = {
   "Lukáš Hrdina": { phone: "+420 773 498 424", email: "lukas.hrdina@hrdinareality.cz" },
+  "Jana Hrdinová": { phone: "+420 773 960 886", email: "hrdinareality@gmail.com" },
 };

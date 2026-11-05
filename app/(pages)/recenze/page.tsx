@@ -42,7 +42,7 @@ export default async function RecenzePage({ searchParams }: PageProps<"/recenze"
       <section className="bg-surface-50">
         <div data-reveal className="container-site flex flex-col gap-6 px-6 py-12 lg:flex-row lg:items-center lg:gap-12 lg:px-[120px] lg:py-16">
           <div className="flex flex-col gap-1.5">
-            <p className="text-display-xl text-brass-600">
+            <p className="font-serif font-normal text-display-xl text-brass-600">
               <CountUp value="4,9" />
             </p>
             <p aria-label="5 z 5 hvězd" className="text-title-m text-brass-500">

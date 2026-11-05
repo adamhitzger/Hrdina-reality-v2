@@ -48,7 +48,7 @@ export default async function ONasPage() {
         <div className="container-site flex flex-col gap-10 px-6 py-16 lg:flex-row lg:items-center lg:gap-12 lg:px-[120px] lg:py-24 xl:gap-20">
           <div data-reveal className="flex-1">
             <p className="text-label-s text-brass-500 lg:text-label-m">Náš příběh</p>
-            <h2 className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:max-w-[480px] lg:text-display-l">
+            <h2 className="mt-[14px] font-serif font-light text-heading-s text-ink-900 lg:mt-4 lg:max-w-[480px] lg:text-display-l">
               Začalo to na druhé <br className="hidden lg:block" />
               straně světa
             </h2>
@@ -79,7 +79,7 @@ export default async function ONasPage() {
       <section className="bg-surface-50">
         <div className="container-site px-6 py-16 lg:px-[120px] lg:py-24">
           <p data-reveal className="text-label-s text-brass-500 lg:text-label-m">Jak pracujeme</p>
-          <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Tři pilíře naší práce</h2>
+          <h2 data-reveal className="mt-[14px] font-serif font-normal text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Tři pilíře naší práce</h2>
           <div className="mt-10 grid gap-8 lg:mt-14 lg:grid-cols-3 lg:gap-[30px]">
             {values.map((v) => (
               <div key={v.title} data-reveal className="border-t-2 border-brass-500 pt-6 lg:text-center">
@@ -95,7 +95,7 @@ export default async function ONasPage() {
       <section className="bg-surface-0">
         <div className="container-site px-6 py-16 lg:px-[120px] lg:py-24">
           <p data-reveal className="text-label-s text-brass-500 lg:text-label-m">Co pro vás uděláme</p>
-          <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Tři služby, jeden makléř</h2>
+          <h2 data-reveal className="mt-[14px] font-serif font-normal text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Tři služby, jeden makléř</h2>
           <p data-reveal className="mt-4 text-body-m text-ink-500 lg:max-w-[620px] lg:text-body-l">
             U každé zakázky vás vede jeden člověk od první schůzky po katastr. Nepředáváme vás mezi odděleními.
           </p>
@@ -109,7 +109,7 @@ export default async function ONasPage() {
       <section className="bg-surface-100">
         <div className="container-site px-6 py-16 lg:px-[120px] lg:pt-24 lg:pb-[104px]">
           <p data-reveal className="text-label-s text-brass-600 lg:text-label-m">Průběh spolupráce</p>
-          <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">Jak to probíhá</h2>
+          <h2 data-reveal className="mt-[14px] font-serif font-normal text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">Jak to probíhá</h2>
           <ol className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-[30px]">
             {processSteps.map((s, i) => (
               <li key={s.title} data-reveal className="border-t-2 border-brass-500 pt-6">
@@ -126,7 +126,7 @@ export default async function ONasPage() {
       <section className="bg-surface-0">
         <div className="container-site px-6 py-16 lg:px-[120px] lg:pt-24 lg:pb-[104px]">
           <p data-reveal className="text-label-s text-brass-500 lg:text-label-m">Naši makléři</p>
-          <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Lidé, na které se dovoláte</h2>
+          <h2 data-reveal className="mt-[14px] font-serif font-normal text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Lidé, na které se dovoláte</h2>
           <div className="mt-10 grid gap-10 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-x-[30px] lg:gap-y-14">
             {staff.map((s) => {
               const contact = agentContacts[stegaClean(s.name)];
@@ -157,7 +157,7 @@ export default async function ONasPage() {
       {/* CTA (28:427) */}
       <section className="bg-surface-50">
         <div data-reveal className="container-site flex flex-col items-center px-6 py-16 text-center lg:px-[120px] lg:py-[88px]">
-          <h2 className="text-heading-s text-ink-900 lg:text-display-l">Nevíte, kde začít?</h2>
+          <h2 className="font-serif font-bold text-heading-s text-ink-900 lg:text-display-l">Nevíte, kde začít?</h2>
           <p className="mt-4 max-w-[620px] text-body-m text-ink-500 lg:text-body-l">
             Zavolejte nám. První schůzka je nezávazná, zdarma a odejdete z ní s konkrétním číslem.
           </p>

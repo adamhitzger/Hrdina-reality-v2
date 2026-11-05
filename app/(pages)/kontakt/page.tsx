@@ -49,7 +49,7 @@ export default async function KontaktPage() {
         <div className="container-site flex flex-col gap-12 py-14 lg:flex-row lg:items-start lg:gap-12 lg:px-[120px] xl:gap-20 lg:py-24">
           <div data-reveal className="flex-1 px-6 lg:px-0">
             <p className="text-label-s text-brass-500 lg:text-label-m">Kde nás najdete</p>
-            <h2 className="mt-[14px] text-heading-m text-ink-900 lg:mt-4 lg:max-w-[480px] lg:text-display-l">{site.address.street}</h2>
+            <h2 className="mt-[14px] font-serif font-normal text-heading-m text-ink-900 lg:mt-4 lg:max-w-[480px] lg:text-display-l">{site.address.street}</h2>
             <p className="mt-4 text-body-m text-ink-500 lg:mt-5 lg:max-w-[460px]">
               {site.address.postalCode} {site.address.city} — kancelář je přímo na náměstí, vchod vedle lékárny.
             </p>

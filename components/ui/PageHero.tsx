@@ -41,7 +41,7 @@ export default function PageHero({
             <span aria-current="page">{crumb}</span>
           )}
         </nav>
-        <h1 className="mt-[14px] text-heading-m text-surface-0 motion-safe:animate-fade-up motion-safe:[animation-delay:160ms] lg:mt-[18px] lg:max-w-[760px] lg:text-display-l">{title}</h1>
+        <h1 className="mt-[14px] font-serif font-bold text-heading-m text-surface-0 motion-safe:animate-fade-up motion-safe:[animation-delay:160ms] lg:mt-[18px] lg:max-w-[760px] lg:text-display-l">{title}</h1>
         <p className="mt-[14px] text-body-m text-on-dark-muted motion-safe:animate-fade-up motion-safe:[animation-delay:260ms] lg:mt-5 lg:max-w-[560px] lg:text-body-l">{lead}</p>
       </div>
     </section>

@@ -65,7 +65,7 @@ export default async function HomePage() {
           <p className="mt-[18px] text-label-s text-brass-300 motion-safe:animate-fade-up motion-safe:[animation-delay:100ms] lg:mt-[22px] lg:text-label-m">
             Realitní kancelář · Havlíčkův Brod<span className="hidden lg:inline"> a Vysočina</span>
           </p>
-          <h1 className="mt-4 text-heading-m text-surface-0 motion-safe:animate-fade-up motion-safe:[animation-delay:200ms] lg:mt-5 lg:max-w-[760px] lg:text-display-xl">
+          <h1 className="mt-4 font-serif font-light text-heading-m text-surface-0 motion-safe:animate-fade-up motion-safe:[animation-delay:200ms] lg:mt-5 lg:max-w-[760px] lg:text-display-xl">
             Najděte místo, <br />
             které si opravdu <br />
             zamilujete
@@ -188,7 +188,7 @@ export default async function HomePage() {
           </div>
           <div data-reveal="right" className="flex flex-col justify-center px-6 pt-14 pb-16 lg:py-24 lg:pr-12 lg:pl-12 xl:pr-[120px] xl:pl-[88px]">
             <p className="text-label-s text-brass-300 lg:text-label-m">O nás</p>
-            <h2 className="mt-[14px] text-heading-s text-surface-0 lg:mt-5 lg:max-w-[520px] lg:text-display-l">
+            <h2 className="mt-[14px] font-serif font-light text-heading-s text-surface-0 lg:mt-5 lg:max-w-[520px] lg:text-display-l">
               19 let zkušeností. Osobní přístup. Znalost místního trhu.
             </h2>
             <div className="mt-4 flex flex-col gap-3 text-body-m text-on-dark-muted lg:mt-6 lg:max-w-[500px]">
@@ -264,7 +264,7 @@ export default async function HomePage() {
             <div className="flex-1 lg:pt-1.5 lg:pb-11">
               <h2 className="text-[30px] leading-[1.1] tracking-[-0.3px] text-brass-300 lg:text-[44px] lg:tracking-[-0.44px]">
                 <span className="block font-bold">Máte na víc?</span>
-                <span className="block font-light">Stále hledáme ty nejlepší lidi v oboru</span>
+                <span className="block font-serif font-light">Stále hledáme ty nejlepší lidi v oboru</span>
               </h2>
               <div className="mt-6 flex flex-col gap-2 text-body-m text-brass-300 lg:mt-10 lg:max-w-[380px]">
                 <p>Hledáme lidi, kteří chtějí v realitách něco dokázat.</p>

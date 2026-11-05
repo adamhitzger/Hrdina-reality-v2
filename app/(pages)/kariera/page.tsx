@@ -52,7 +52,7 @@ export default async function KarieraPage({ searchParams }: PageProps<"/kariera"
         <div className="container-site flex flex-col gap-10 px-6 py-16 lg:flex-row lg:items-center lg:gap-12 lg:px-[120px] lg:py-24 xl:gap-20">
           <div data-reveal className="flex-1">
             <p className="text-label-s text-brass-500 lg:text-label-m">Práce v Hrdina Reality</p>
-            <h2 className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">
+            <h2 className="mt-[14px] font-serif font-light text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">
               Dáváme prostor růstu. <br className="hidden lg:block" />
               Budujeme kariéry.
             </h2>
@@ -96,7 +96,7 @@ export default async function KarieraPage({ searchParams }: PageProps<"/kariera"
           <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-[30px]">
             {cultureStats.map((s) => (
               <div key={s.label} data-reveal className="flex flex-col gap-2.5 border-t-2 border-brass-500 pt-6">
-                <p className="text-display-l text-brass-500">
+                <p className="font-serif font-normal text-display-l text-brass-500">
                   <CountUp value={s.value} />
                 </p>
                 <p className="text-body-m text-ink-500">{s.label}</p>
@@ -112,7 +112,7 @@ export default async function KarieraPage({ searchParams }: PageProps<"/kariera"
           <div className="container-site px-6 py-16 lg:px-[120px] lg:pt-24 lg:pb-[104px]">
             <SectionHeading
               eyebrow="Otevřené pozice"
-              title="Pořád hledáme nové lidi do týmu"
+              title="Stále hledáme nové lidi do týmu"
               titleClassName="lg:max-w-[600px]"
               lead={
                 <span className="lg:hidden">
@@ -155,7 +155,7 @@ export default async function KarieraPage({ searchParams }: PageProps<"/kariera"
       <section className="bg-surface-50">
         <div className="container-site px-6 py-16 lg:px-[120px] lg:pt-24 lg:pb-[104px]">
           <p data-reveal className="text-label-s text-brass-500 lg:text-label-m">Proč k nám</p>
-          <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">Co u nás dostanete</h2>
+          <h2 data-reveal className="mt-[14px] font-serif font-light text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">Co u nás dostanete</h2>
           <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-[30px]">
             {benefits.map((b) => (
               <div key={b.title} data-reveal className="flex flex-col gap-3 border-t-2 border-brass-500 pt-6">
@@ -181,7 +181,7 @@ export default async function KarieraPage({ searchParams }: PageProps<"/kariera"
           </div>
           <figure data-reveal="right" className="flex flex-col justify-center px-6 pt-14 pb-16 lg:py-24 lg:pr-12 lg:pl-12 xl:pr-[120px] xl:pl-[88px]">
             <p className="text-label-s text-brass-300 lg:text-label-m">Slovo majitele</p>
-            <blockquote className="mt-5 text-title-m text-surface-0 lg:text-heading-m">
+            <blockquote className="mt-5 font-serif font-light text-title-m text-surface-0 lg:text-heading-m lg:font-light">
               „Vím z vlastní zkušenosti, jak náročné je začínat od nuly. O to víc si uvědomuji, jak důležité je mít vedle sebe někoho, kdo
               vám pomůže, předá své zkušenosti a věří ve váš potenciál. Přesně takové prostředí chci v Hrdina Reality vytvářet. Aby nikdo
               nemusel svou cestu hledat sám.“
@@ -199,7 +199,7 @@ export default async function KarieraPage({ searchParams }: PageProps<"/kariera"
         <div className="container-site flex flex-col gap-12 py-16 lg:flex-row lg:items-start lg:gap-20 lg:px-[120px] lg:pt-24 lg:pb-[104px]">
           <div data-reveal className="flex-1 px-6 lg:px-0">
             <p className="text-label-s text-brass-500 lg:text-label-m">Přihláška</p>
-            <h2 className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">Pojďme se poznat</h2>
+            <h2 className="mt-[14px] font-serif font-light text-heading-s text-ink-900 lg:mt-4 lg:text-display-l">Pojďme se poznat</h2>
             <p className="mt-4 text-body-m text-ink-500 lg:mt-5 lg:text-body-l">
               Vyplňte pár údajů a ozveme se vám do tří pracovních dnů. Žádné kolečko pohovorů — první schůzka je u kávy přímo v kanceláři.
             </p>

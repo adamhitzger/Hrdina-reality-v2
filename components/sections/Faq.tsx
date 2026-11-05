@@ -11,7 +11,7 @@ export default function Faq() {
         <div data-reveal className="lg:w-[300px] lg:shrink-0 xl:w-[400px]">
           <div className="h-[2px] w-10 bg-brass-500 lg:w-12" />
           <p className="mt-[18px] text-label-s text-brass-500 lg:text-label-m">Náš rádce</p>
-          <h2 className="mt-[14px] text-heading-s text-ink-900 lg:text-display-l">
+          <h2 className="mt-[14px] font-serif font-bold text-heading-s text-ink-900 lg:text-display-l">
             Nejčastější <br className="hidden lg:block" />
             otázky
           </h2>

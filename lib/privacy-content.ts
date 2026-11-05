@@ -10,7 +10,7 @@ import { site } from "./site";
 export const PRIVACY_PATH = "/ochrana-osobnich-udaju";
 
 // Účinnost zásad – při změně textu posunout
-export const privacyEffectiveFrom = "25. 10. 2026";
+export const privacyEffectiveFrom = "5. 11. 2026";
 
 export type PrivacyBlock =
   | { type: "p"; text: string }
@@ -139,7 +139,7 @@ export const privacySections: PrivacySection[] = [
       },
       {
         type: "p",
-        text: "Na detailu nemovitosti, na stránce Kontakt a na stránce Realizované prodeje je vložená mapa Google Maps. Při jejím načtení společnost Google obdrží Vaši IP adresu a může ukládat vlastní cookies podle svých zásad (https://policies.google.com/privacy). Odkazy na Facebook a Instagram jsou obyčejné odkazy, dokud na ně nekliknete, nic se těmto službám neposílá. Používání cookies lze kdykoliv omezit v nastavení Vašeho internetového prohlížeče.",
+        text: "Na detailu nemovitosti a na stránce Kontakt je vložená mapa OpenStreetMap. Při jejím načtení obdrží OpenStreetMap Foundation Vaši IP adresu a může ukládat vlastní technické cookies podle svých zásad (https://osmfoundation.org/wiki/Privacy_Policy). Na stránce Realizované prodeje je vložená mapa Google Maps. Při jejím načtení společnost Google obdrží Vaši IP adresu a může ukládat vlastní cookies podle svých zásad (https://policies.google.com/privacy). Odkazy na Facebook a Instagram jsou obyčejné odkazy, dokud na ně nekliknete, nic se těmto službám neposílá. Používání cookies lze kdykoliv omezit v nastavení Vašeho internetového prohlížeče.",
       },
     ],
   },

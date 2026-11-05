@@ -17,7 +17,7 @@ export default function NotFound() {
           <div className="container-site flex flex-col items-start px-6 py-24 lg:px-[120px] lg:py-36">
             <div className="h-[2px] w-10 bg-brass-500 lg:w-12" />
             <p className="mt-[18px] text-label-s text-brass-500 lg:mt-[22px] lg:text-label-m">Chyba 404</p>
-            <h1 className="mt-[14px] text-heading-m text-ink-900 lg:mt-4 lg:text-display-l">Tahle stránka neexistuje</h1>
+            <h1 className="mt-[14px] font-serif font-light text-heading-m text-ink-900 lg:mt-4 lg:text-display-l">Tahle stránka neexistuje</h1>
             <p className="mt-4 max-w-[560px] text-body-m text-ink-500 lg:mt-5 lg:text-body-l">
               Odkaz je možná starý, nebo už nemovitost není v nabídce. Podívejte se na aktuální nabídku, případně nám zavolejte a rádi
               poradíme.

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat } from "next/font/google";
+import { Inria_Serif, Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
@@ -11,6 +11,13 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin", "latin-ext"],
   weight: ["300", "400", "500", "600", "700"],
+});
+
+// Nadpisy (Figma: Inria Serif Light / Regular / Bold)
+const inriaSerif = Inria_Serif({
+  variable: "--font-inria-serif",
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -64,7 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="cs"
-      className={`${montserrat.variable} h-full antialiased`}
+      className={`${montserrat.variable} ${inriaSerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

@@ -62,7 +62,7 @@ export default async function RealizovaneProdejePage({ searchParams }: PageProps
         <div className="container-site grid gap-8 px-6 py-14 md:grid-cols-3 lg:gap-[30px] lg:px-[120px] lg:py-[72px]">
           {soldStats.map((s) => (
             <div key={s.label} data-reveal className="flex flex-col gap-2">
-              <p className="text-display-l text-brass-600 lg:text-display-xl">
+              <p className="font-serif font-normal text-display-l text-brass-600 lg:text-display-xl">
                 <CountUp value={s.value} />
               </p>
               <p className="text-body-m text-ink-500">{s.label}</p>
@@ -77,7 +77,7 @@ export default async function RealizovaneProdejePage({ searchParams }: PageProps
           <p data-reveal className="text-label-s text-brass-500 lg:text-label-m">
             Mapa prodejů
           </p>
-          <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">
+          <h2 data-reveal className="mt-[14px] font-serif font-light text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">
             Kde všude jsme prodávali
           </h2>
           <div data-reveal="fade" className="relative mt-8 h-[420px] overflow-hidden rounded bg-[#e8e3da] lg:mt-14 lg:h-[560px]">
@@ -104,7 +104,7 @@ export default async function RealizovaneProdejePage({ searchParams }: PageProps
       <section className="bg-surface-0">
         <div className="container-site px-6 py-16 lg:px-[120px] lg:pt-24 lg:pb-[104px]">
           <p data-reveal className="text-label-s text-brass-500 lg:text-label-m">Výběr z portfolia</p>
-          <h2 data-reveal className="mt-[14px] text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Za námi stojí skutečné výsledky</h2>
+          <h2 data-reveal className="mt-[14px] font-serif font-light text-heading-s text-ink-900 lg:mt-4 lg:max-w-[620px] lg:text-display-l">Za námi stojí skutečné výsledky</h2>
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-x-[30px] lg:gap-y-10">
             {items.map((r) => (
               <PropertyCard
