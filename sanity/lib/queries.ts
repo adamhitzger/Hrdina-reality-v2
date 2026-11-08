@@ -3,7 +3,9 @@ import "server-only";
 import { groq } from "next-sanity";
 
 // Články blogu = Podstránky (typ `page`). Stránky jen s formulářem (bez textu s fotkou) článek nejsou.
-const ARTICLE_FILTER = `_type == "page" && defined(slug.current) && count(sections[_type == "textWithImage"]) > 0`;
+const PAGE_FILTER = `_type == "page" && defined(slug.current) && count(sections) > 0`;
+// Výpis blogu: jen podstránky s textem. Ty, co mají jen formulář, mají vlastní adresu, ale do výpisu nejdou.
+const ARTICLE_FILTER = `${PAGE_FILTER} && count(sections[_type == "textWithImage"]) > 0`;
 
 export const STAFF_QUERY = groq`*[_type == 'staff'] | order(poradi asc) {
   name,
@@ -133,7 +135,7 @@ export const POSTS_QUERY = groq`*[${ARTICLE_FILTER}] | order(_createdAt desc) { 
 
 export const LATEST_POSTS_QUERY = groq`*[${ARTICLE_FILTER}] | order(_createdAt desc)[0...3] { ${ARTICLE_CARD} }`;
 
-export const POST_QUERY = groq`*[${ARTICLE_FILTER} && slug.current == $slug][0] {
+export const POST_QUERY = groq`*[${PAGE_FILTER} && slug.current == $slug][0] {
   ${ARTICLE_CARD},
   heading,
   sections[]{
@@ -157,9 +159,9 @@ export const POST_QUERY = groq`*[${ARTICLE_FILTER} && slug.current == $slug][0] 
   }
 }`;
 
-export const POST_SLUGS_QUERY = groq`*[${ARTICLE_FILTER}].slug.current`;
+export const POST_SLUGS_QUERY = groq`*[${PAGE_FILTER}].slug.current`;
 
-export const SITEMAP_POSTS_QUERY = groq`*[${ARTICLE_FILTER}] | order(_createdAt desc) {
+export const SITEMAP_POSTS_QUERY = groq`*[${PAGE_FILTER}] | order(_createdAt desc) {
   "slug": slug.current,
   _updatedAt,
   "imageUrl": image.asset->url

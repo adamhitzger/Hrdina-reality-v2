@@ -3,6 +3,7 @@ import Link from "next/link";
 import { stegaClean, type PortableTextBlock } from "next-sanity";
 import { Fragment, type ReactNode } from "react";
 
+import ClampedText from "@/components/blog/ClampedText";
 import ContactForm from "@/components/forms/ContactForm";
 import { button } from "@/components/ui/button";
 import RichText from "@/components/ui/RichText";
@@ -16,12 +17,21 @@ type Section<T extends ArticleSection["_type"]> = Extract<ArticleSection, { _typ
 function Paragraphs({ blocks }: { blocks?: PortableTextBlock[] }) {
   if (!blocks?.length) return null;
   const out: ReactNode[] = [];
+  const lists: { index: number; blocks: PortableTextBlock[]; end: number }[] = [];
 
   blocks.forEach((block, bi) => {
     if (block._type !== "block") return;
     const children = (block.children ?? []) as { text?: string; marks?: string[] }[];
     const formatted = children.some((c) => c.marks?.length) || (block.markDefs?.length ?? 0) > 0 || block.listItem;
     if (formatted) {
+      // Body seznamu jsou v Sanity samostatné bloky. Po sobě jdoucí patří do jednoho <ol>/<ul>, jinak by každý číslovaný začínal od 1.
+      const list = lists.at(-1);
+      if (block.listItem && list?.end === bi - 1 && list.blocks[0].listItem === block.listItem) {
+        list.blocks.push(block);
+        list.end = bi;
+        return;
+      }
+      if (block.listItem) lists.push({ index: out.length, blocks: [block], end: bi });
       out.push(<RichText key={bi} value={[block]} />);
       return;
     }
@@ -75,6 +85,8 @@ function Paragraphs({ blocks }: { blocks?: PortableTextBlock[] }) {
     });
   });
 
+  for (const list of lists) out[list.index] = <RichText key={list.end} value={list.blocks} />;
+
   return <div className="flex flex-col gap-[14px]">{out}</div>;
 }
 
@@ -99,19 +111,31 @@ function TextWithImage({ s }: { s: Section<"textWithImage"> }) {
   // V draft módu / Vercel preview nese stega v řetězcích neviditelné znaky, porovnání by vždy selhalo
   const imageLeft = stegaClean(s.position) === "Obrázek vlevo";
   const width = imageWidth[stegaClean(s.image_pos) ?? "1/4 sekce"] ?? imageWidth["1/4 sekce"];
+  const content = (
+    <>
+      {s.heading && <h2 className="text-heading-s text-ink-900">{headingCase(s.heading)}</h2>}
+      <Paragraphs blocks={s.text} />
+      <SectionButton text={s.button?.text} url={s.button?.url} />
+    </>
+  );
 
+  // Po rozbalení dlouhého textu (ClampedText) se fotka přichytí nahoru a při scrollu zůstane vidět
   return (
-    <div className={`flex flex-col gap-8 lg:items-center lg:gap-16 ${imageLeft ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
+    <div className={`flex flex-col gap-8 lg:items-center lg:gap-16 lg:has-[[aria-expanded=true]]:items-start ${imageLeft ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
       {s.imageUrl && (
-        <div data-reveal="image" className={`relative aspect-[4/3] overflow-hidden rounded bg-surface-100 lg:aspect-[4/5] lg:shrink-0 ${width}`}>
+        <div data-reveal="image" className={`relative aspect-[4/3] overflow-hidden rounded bg-surface-100 lg:sticky lg:top-10 lg:aspect-[4/5] lg:shrink-0 ${width}`}>
           <Image src={s.imageUrl} alt="" fill sizes="(min-width: 1024px) 600px, 100vw" className="object-cover" />
         </div>
       )}
-      <div data-reveal className="flex min-w-0 flex-1 flex-col gap-5">
-        {s.heading && <h2 className="text-heading-s text-ink-900">{headingCase(s.heading)}</h2>}
-        <Paragraphs blocks={s.text} />
-        <SectionButton text={s.button?.text} url={s.button?.url} />
-      </div>
+      {s.imageUrl ? (
+        <div data-reveal className="flex min-w-0 flex-1 lg:self-stretch">
+          <ClampedText>{content}</ClampedText>
+        </div>
+      ) : (
+        <div data-reveal className="flex min-w-0 flex-1 flex-col gap-5">
+          {content}
+        </div>
+      )}
     </div>
   );
 }
