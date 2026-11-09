@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inria_Serif, Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
@@ -7,17 +7,23 @@ import JsonLd from "@/components/JsonLd";
 import { organizationJsonLd } from "@/lib/json-ld";
 import { site, siteUrl } from "@/lib/site";
 
-const montserrat = Montserrat({
+// Fonty jsou v repu (app/fonts, OFL), ne z next/font/google: na Vercelu se Google font při buildu
+// občas nestáhne a Turbopack pak spadne na „Can't resolve '@vercel/turbopack-next/internal/font/google/font'“.
+// Soubory jsou z github.com/google/fonts zmenšené na latin + latin-ext (pyftsubset), čeština je kompletní.
+const montserrat = localFont({
   variable: "--font-montserrat",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600", "700"],
+  src: [{ path: "./fonts/Montserrat-Variable.woff2", weight: "100 900", style: "normal" }],
 });
 
-// Nadpisy (Figma: Inria Serif Light / Regular / Bold)
-const inriaSerif = Inria_Serif({
+// Nadpisy (Figma: Inria Serif Light / Regular / Bold), kurzíva jen na /pruvodce
+const inriaSerif = localFont({
   variable: "--font-inria-serif",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "700"],
+  src: [
+    { path: "./fonts/InriaSerif-Light.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/InriaSerif-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/InriaSerif-Italic.woff2", weight: "400", style: "italic" },
+    { path: "./fonts/InriaSerif-Bold.woff2", weight: "700", style: "normal" },
+  ],
 });
 
 export const metadata: Metadata = {

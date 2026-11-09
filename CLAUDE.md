@@ -34,6 +34,7 @@ Otevřené úkoly a rozpracované věci jsou v `TODO.md`.
 - Tailwind: `app/globals.css` má explicitní `@source` pro `app` a `components`, protože jinak nenacházel třídy v `app/(pages)`.
 - Server akce mají `bodySizeLimit: "11mb"` kvůli životopisu do 10 MB (`next.config.ts`).
 - Animace: při scrollu `data-reveal` (zdola), `data-reveal="fade"`, `="left"`/`="right"` (z boku, jen od lg), `="image"` (na rámeček s `overflow-hidden`, fotka se usadí). Sourozenci se automaticky řadí se zpožděním. Hero při načtení: `motion-safe:animate-fade-up` / `animate-fade-in` / `animate-hero-zoom`. CSS je v `app/globals.css`, při omezení pohybu se nic neanimuje.
+- Fonty (Montserrat variabilní, Inria Serif 300/400/400 italic/700) jsou v `app/fonts` přes `next/font/local`, ne `next/font/google`: stahování z Google při buildu na Vercelu padalo. Nový řez = stáhnout z github.com/google/fonts a zmenšit `pyftsubset` na latin + latin-ext.
 - Komentáře a texty v UI jsou česky.
 
 ## Ověření
