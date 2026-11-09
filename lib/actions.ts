@@ -5,10 +5,15 @@ import { Reality, RealityCard } from "@/sanity/lib/interfaces";
 import { groq } from "next-sanity";
 import { revalidatePath } from "next/cache";
 import nodemailer from "nodemailer"
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ActionResponse } from "@/types";
-import { ApplicationInputs, ContactNemovitostiType, ContactType, application_schema, contact_schema, contact_nemovitosti_schema } from "@/lib/schemas";
+import { ApplicationInputs, ContactNemovitostiType, ContactType, GuideType, application_schema, contact_schema, contact_nemovitosti_schema, guide_schema } from "@/lib/schemas";
 import { REALITY_QUERY } from "@/sanity/lib/queries";
-import { renderKontaktEmail, renderPoptavkaEmail, renderPrihlaskaEmail } from "@/lib/emails";
+import { renderKontaktEmail, renderPoptavkaEmail, renderPrihlaskaEmail, renderPruvodceEmail } from "@/lib/emails";
+import { GUIDE_FILENAME } from "@/lib/guide";
+import { site, siteUrl } from "@/lib/site";
+import { writeClient } from "@/sanity/lib/write-client";
 
 const LUKAS_EMAIL = "lukas.hrdina@hrdinareality.cz";
 
@@ -272,3 +277,72 @@ export async function sendContact(
     }
   }
 
+
+  // Průvodce světem nemovitostí: kontakt se uloží do Sanity (Maily z PDF), PDF jde zákazníkovi v příloze
+  // a e-mail nese sledovací pixel s _id dokumentu (app/api/email-open/route.ts)
+  export async function sendGuide(
+    _prevState: ActionResponse<GuideType>,
+    formData: FormData
+  ): Promise<ActionResponse<GuideType>> {
+    const raw_inputs: GuideType = {
+        firstname: formData.get("firstname") as string,
+        lastname: formData.get("lastname") as string,
+        email: formData.get("email") as string,
+    };
+    try {
+        const validate = guide_schema.safeParse(raw_inputs);
+
+        if(!validate.success){
+            return {
+                success: false,
+                submitted: true,
+                message: "Některá pole jste nevyplnili dobře",
+                errors: validate.error.flatten().fieldErrors,
+                inputs: raw_inputs,
+            }
+        }
+
+        const data = validate.data;
+        const sanity = writeClient();
+        const lead = await sanity.create({ _type: "pdfLead", ...data, openCount: 0 });
+
+        const [mail, pdf] = await Promise.all([
+            renderPruvodceEmail(`${siteUrl}/api/email-open?id=${encodeURIComponent(lead._id)}`),
+            // Pevná cesta, s proměnnou by Turbopack přibalil do funkce celý projekt
+            readFile(path.join(process.cwd(), "assets/pruvodce-svetem-nemovitosti.pdf")),
+        ]);
+
+        const sendMail = await smtp().sendMail({
+          from: `"Hrdina Reality" <${process.env.FROM_EMAIL}>`,
+          to: { name: `${data.firstname} ${data.lastname}`, address: data.email },
+          replyTo: { name: site.name, address: site.email },
+          ...mail,
+          attachments: [{ filename: GUIDE_FILENAME, content: pdf, contentType: "application/pdf" }],
+        })
+
+        if(sendMail.accepted.length === 0){
+            return {
+                success: false,
+                submitted: true,
+                message: "Průvodce se nepodařilo odeslat. Zkontrolujte e-mail, nebo nám zavolejte.",
+                inputs: raw_inputs,
+            }
+        }
+
+        await sanity.patch(lead._id).set({ sentAt: new Date().toISOString() }).commit();
+
+        return {
+            success: true,
+            submitted: true,
+            message: "Hotovo, průvodce máte v e-mailu",
+        }
+    }catch(error){
+        console.error("Error v serverové akci sendGuide: ", error);
+        return {
+            submitted: true,
+            success: false,
+            message: "Průvodce se nepodařilo odeslat",
+            inputs: raw_inputs,
+        };
+    }
+  }

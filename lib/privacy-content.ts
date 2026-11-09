@@ -10,7 +10,7 @@ import { site } from "./site";
 export const PRIVACY_PATH = "/ochrana-osobnich-udaju";
 
 // Účinnost zásad – při změně textu posunout
-export const privacyEffectiveFrom = "5. 11. 2026";
+export const privacyEffectiveFrom = "9. 11. 2026";
 
 export type PrivacyBlock =
   | { type: "p"; text: string }
@@ -44,6 +44,13 @@ export const privacyForms = [
     basis: "Váš souhlas (čl. 6 odst. 1 písm. a) Nařízení GDPR), který můžete kdykoliv odvolat",
     retention: "do konce výběrového řízení, nejdéle 1 rok od doručení přihlášky; u přijatých uchazečů podle pracovněprávních předpisů",
   },
+  {
+    form: "Průvodce světem nemovitostí",
+    data: "jméno, příjmení, e-mail a informace, kolikrát a kdy se e-mail s průvodcem zobrazil (přes obrázek v e-mailu)",
+    purpose: "zaslání průvodce v PDF na Vaši žádost a přehled, zda e-mail dorazil a byl otevřen",
+    basis: "plnění Vaší žádosti (čl. 6 odst. 1 písm. b) Nařízení GDPR) a oprávněný zájem ověřit doručení (písm. f). Zobrazení se nezapočítá, když máte v e-mailu vypnuté načítání obrázků",
+    retention: "1 rok od odeslání průvodce",
+  },
 ];
 
 export const privacySections: PrivacySection[] = [
@@ -72,7 +79,7 @@ export const privacySections: PrivacySection[] = [
     blocks: [
       {
         type: "p",
-        text: "Osobní údaje zpracováváme jen tehdy, když nám je sami pošlete přes formulář na webu. Formuláře se odesílají e-mailem do naší kanceláře a na webu se nikam neukládají. Údaje nepoužíváme k marketingu, neposíláme newslettery a nikomu je neprodáváme.",
+        text: "Osobní údaje zpracováváme jen tehdy, když nám je sami pošlete přes formulář na webu. Formuláře se odesílají e-mailem do naší kanceláře a na webu se nikam neukládají. Výjimkou je žádost o průvodce, kterou si uložíme do redakčního systému webu (Sanity), abychom věděli, komu jsme ho poslali. Údaje nepoužíváme k marketingu, neposíláme newslettery a nikomu je neprodáváme.",
       },
       { type: "forms" },
       {
@@ -121,6 +128,7 @@ export const privacySections: PrivacySection[] = [
         items: [
           "Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irsko – e-mailová schránka (Gmail), do které přicházejí formuláře z webu",
           "Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA – hosting webu, technicky zpracovává odeslané formuláře a vede krátkodobé provozní záznamy serveru (IP adresa, čas požadavku)",
+          "Sanity Inc., USA – redakční systém webu, ukládá žádosti o průvodce",
         ],
       },
       {

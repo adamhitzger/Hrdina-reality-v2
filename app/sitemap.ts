@@ -30,6 +30,7 @@ const staticRoutes: {
   { path: "/kariera", changeFrequency: "monthly", priority: 0.5, sources: ["positions"] },
   { path: "/kontakt", changeFrequency: "monthly", priority: 0.7 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.6, sources: ["posts"] },
+  { path: "/pruvodce", changeFrequency: "monthly", priority: 0.5 },
   { path: "/ochrana-osobnich-udaju", changeFrequency: "monthly", priority: 0.2 },
 ];
 

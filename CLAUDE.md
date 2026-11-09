@@ -19,6 +19,7 @@ Otevřené úkoly a rozpracované věci jsou v `TODO.md`.
 - OG obrázek detailu nemovitosti se vyrenderuje přes `ImageResponse` (PNG) a `sharp` ho převede na JPEG. `sharp` je proto v dependencies.
 - `components/forms/`: formuláře a `useActionToast`.
 - Blog = dokumenty „Podstránky“ (`page`) ze Sanity, jen ty se sekcí text s fotkou. Sekce renderuje `components/blog/ArticleSections.tsx`, nadpisy verzálkami a „HRDINA Reality“ srovnává `lib/blog.ts` při zobrazení.
+- Průvodce `/pruvodce` (lead magnet): strany 1–2 PDF přepsané do HTML (texty `lib/guide.ts`, ilustrace vytažené z PDF v `public/images/pruvodce`), zbytek chodí e-mailem. `sendGuide` v `lib/actions.ts` založí v Sanity dokument „Maily z PDF“ (`pdfLead`, přes `sanity/lib/write-client.ts`), pošle zákazníkovi `emails/pruvodce.tsx` s PDF v příloze (`assets/pruvodce-svetem-nemovitosti.pdf`, cesta v akci musí zůstat literál kvůli tracingu) a zapíše `sentAt`. V e-mailu je pixel `/api/email-open?id=<_id>`, který zvedá `openCount` a `first/lastOpenedAt` (jen u `_type == "pdfLead"`). Oslovení v e-mailu je bez jména (5. pád).
 - Čísla a statistiky se při zobrazení napočítávají přes `components/ui/CountUp.tsx` (`<CountUp value="400+" />`).
 
 ## Konvence
@@ -41,4 +42,4 @@ Otevřené úkoly a rozpracované věci jsou v `TODO.md`.
 
 ## Env
 
-`FROM_EMAIL`, `FROM_EMAIL_PASSWORD` (Gmail app password), `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`, `SANITY_API_READ_TOKEN`, `NEXT_PUBLIC_SITE_URL`.
+`FROM_EMAIL`, `FROM_EMAIL_PASSWORD` (Gmail app password), `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`, `SANITY_API_READ_TOKEN`, `SANITY_API_WRITE_TOKEN` (role Editor, zápis Mailů z PDF a počítadla zobrazení), `NEXT_PUBLIC_SITE_URL`.

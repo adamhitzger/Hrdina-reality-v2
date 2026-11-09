@@ -52,7 +52,15 @@ export const application_schema = z.object({
         .optional(),
 });
 
+// Průvodce světem nemovitostí (/pruvodce): celé PDF jde na zadaný e-mail
+export const guide_schema = z.object({
+    firstname: z.string().trim().min(2, {message: "Jméno je moc krátké"}),
+    lastname: z.string().trim().min(2, {message: "Příjmení je moc krátké"}),
+    email: z.email({message: "Zadaný formát e-mailu je nespravný"}).trim(),
+});
+
 export type ContactType = z.infer<typeof contact_schema>
+export type GuideType = z.infer<typeof guide_schema>
 export type ContactNemovitostiType = z.infer<typeof contact_nemovitosti_schema>
 export type ApplicationType = z.infer<typeof application_schema>
 // Co se vrací zpět do formuláře (bez souboru a souhlasu)

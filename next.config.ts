@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "5mb",
     },
   },
+  // PDF průvodce čte serverová akce sendGuide z disku a posílá ho v příloze (lib/guide.ts)
+  outputFileTracingIncludes: {
+    "/pruvodce": ["./assets/pruvodce-svetem-nemovitosti.pdf"],
+  },
   // Podstránky měly na starém webu adresu /podstranky/…, teď jsou to články blogu
   async redirects() {
     return [{ source: "/podstranky/:slug", destination: "/blog/:slug", permanent: true }];

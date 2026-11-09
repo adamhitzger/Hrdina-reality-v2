@@ -11,6 +11,10 @@ Stav k 5. 10. 2026: všech 8 stránek je převedených z Figmy (desktop i mobil)
   - [ ] Přihláška na Kariéře (`sendApplication`), včetně přílohy s CV blízko 10 MB
 - [ ] **Ochrana osobních údajů** (`/ochrana-osobnich-udaju`): údaje od klienta jsou doplněné (Hrdina Group s.r.o., IČO, DIČ, e-maily 1 rok, hosting Vercel). Zbývá zjistit další zpracovatele (CRM, účetní, portály) a nechat text zkontrolovat.
 
+- [ ] **Průvodce (`/pruvodce`)**: vytvořit v Sanity token s rolí Editor a dát ho do `SANITY_API_WRITE_TOKEN` (`.env.local` i Vercel). Bez něj formulář vrátí chybu. Pak vyzkoušet odeslání a otevření e-mailu (počítadlo ve Studiu → Maily z PDF).
+- [ ] Ochrana osobních údajů: doplněný řádek „Průvodce“, Sanity jako zpracovatel (bez adresy, doplnit) a sledovací pixel. Nechat zkontrolovat, jestli pixel nepotřebuje souhlas.
+- [ ] Na `/pruvodce` zatím nic neodkazuje (není v menu ani patičce), je jen v sitemapě.
+
 ## K odsouhlasení s klientem
 
 - [ ] Kontakty makléřů: telefon a e-mail je jen u Lukáše. Čísla …425 a …426 z Figmy vypadala jako zástupná, chybí skutečné (`agentContacts`).

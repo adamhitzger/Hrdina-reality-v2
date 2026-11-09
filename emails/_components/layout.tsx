@@ -43,10 +43,10 @@ const copy = {
   },
 };
 
-const divider = { border: "none", borderTop: `1px solid ${color.line200}`, margin: 0 };
+export const divider = { border: "none", borderTop: `1px solid ${color.line200}`, margin: 0 };
 
 // Mobilní úpravy (Apple Mail, iOS, Gmail app); inline styly přebíjí !important
-const responsiveCss = `
+export const responsiveCss = `
 @media only screen and (max-width: 620px) {
   .m-body { padding: 0 !important; }
   .m-container { border-radius: 0 !important; }
@@ -239,7 +239,7 @@ export function EmailLayout({
   );
 }
 
-const buttonBase = {
+export const buttonBase = {
   ...type.buttonM,
   display: "block",
   boxSizing: "border-box",
@@ -249,7 +249,7 @@ const buttonBase = {
   borderRadius: 4,
 } as const;
 
-function telHref(phone: string) {
+export function telHref(phone: string) {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
 
