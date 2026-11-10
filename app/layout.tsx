@@ -83,6 +83,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Před prvním vykreslením, ať prvky pro ScrollReveal neproblikají; bez JS zůstanou vidět */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('reveal-ready')" }} />
+        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="b1842e40-87b3-4a93-a1c0-55948edf993f" data-blockingmode="auto" type="text/javascript"></script>
       </head>
       <body className="min-h-full flex flex-col">
         <JsonLd data={organizationJsonLd()} />
