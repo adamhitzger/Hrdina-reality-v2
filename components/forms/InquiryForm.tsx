@@ -8,7 +8,7 @@ import { sendContactFromNemovitosti } from "@/lib/actions";
 import { INQUIRY_TOPICS, type ContactNemovitostiType } from "@/lib/schemas";
 import type { ActionResponse } from "@/types";
 
-import { SelectField, TextAreaField, TextField } from "./fields";
+import { Honeypot, SelectField, TextAreaField, TextField } from "./fields";
 import { initialActionState, useActionToast } from "./useActionToast";
 
 // Figma: Detail → Poptávkový formulář (50:1038)
@@ -21,6 +21,7 @@ export default function InquiryForm({ slug }: { slug: string }) {
 
   return (
     <form action={formAction} noValidate className="flex flex-col gap-[18px]">
+      <Honeypot />
       <input type="hidden" name="id" value={slug} />
       <SelectField
         idPrefix="inq-"

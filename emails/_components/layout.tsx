@@ -21,7 +21,8 @@ import { color, fontFamily, type } from "./theme";
 export interface Customer {
   fullname: string;
   email: string;
-  phone: string;
+  /** Formulář průvodce telefon nesbírá: bez něj chybí řádek Telefon i tlačítko Zavolat */
+  phone?: string;
   msg?: string;
 }
 
@@ -68,6 +69,7 @@ export function EmailLayout({
   extraRows = [],
   trailingRows = [],
   sender = "customer",
+  withMessage = true,
   children,
 }: {
   preview: string;
@@ -81,6 +83,8 @@ export function EmailLayout({
   /** Řádky za telefonem, nejsou to odkazy, takže jsou v barvě textu */
   trailingRows?: [label: string, value: string][];
   sender?: keyof typeof copy;
+  /** false = bez sekce Zpráva (průvodce žádnou zprávu nemá) */
+  withMessage?: boolean;
   children?: ReactNode;
 }) {
   const t = copy[sender];
@@ -88,7 +92,7 @@ export function EmailLayout({
     ...extraRows,
     ["Jméno a příjmení", customer.fullname],
     ["E-mail", customer.email, `mailto:${customer.email}`],
-    ["Telefon", customer.phone, telHref(customer.phone)],
+    ...(customer.phone ? [["Telefon", customer.phone, telHref(customer.phone)] as [string, string, string]] : []),
   ];
   const msg = customer.msg?.trim();
   const trailing = trailingRows.filter(([, value]) => value.trim());
@@ -172,6 +176,7 @@ export function EmailLayout({
           </Section>
 
           {/* Zpráva */}
+          {withMessage && (
           <Section className="m-pad" style={{ padding: "32px 40px 0" }}>
             <Text style={{ ...type.labelS, color: color.brass500, marginBottom: 12 }}>{t.message}</Text>
             <Section
@@ -198,11 +203,12 @@ export function EmailLayout({
               )}
             </Section>
           </Section>
+          )}
 
           {/* Akce */}
           <Section className="m-pad" style={{ padding: "32px 40px 40px" }}>
             <Row>
-              <Column className="m-stack" style={{ width: "50%", paddingRight: 6 }}>
+              <Column className="m-stack" style={customer.phone ? { width: "50%", paddingRight: 6 } : { width: "100%" }}>
                 <Button
                   href={`mailto:${customer.email}?subject=${encodeURIComponent(replySubject)}`}
                   style={{ ...buttonBase, backgroundColor: color.navy900, color: color.surface0, border: `1px solid ${color.navy900}` }}
@@ -210,14 +216,16 @@ export function EmailLayout({
                   {t.reply}
                 </Button>
               </Column>
-              <Column className="m-stack" style={{ width: "50%", paddingLeft: 6 }}>
-                <Button
-                  href={telHref(customer.phone)}
-                  style={{ ...buttonBase, backgroundColor: color.surface0, color: color.navy900, border: `1px solid ${color.navy900}` }}
-                >
-                  Zavolat {customer.phone}
-                </Button>
-              </Column>
+              {customer.phone && (
+                <Column className="m-stack" style={{ width: "50%", paddingLeft: 6 }}>
+                  <Button
+                    href={telHref(customer.phone)}
+                    style={{ ...buttonBase, backgroundColor: color.surface0, color: color.navy900, border: `1px solid ${color.navy900}` }}
+                  >
+                    Zavolat {customer.phone}
+                  </Button>
+                </Column>
+              )}
             </Row>
           </Section>
 

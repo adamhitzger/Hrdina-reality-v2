@@ -89,3 +89,16 @@ export function SelectField({
     </FieldShell>
   );
 }
+
+// Honeypot proti botům: pole is_human člověk nevidí ani na něj nedotabuje, bot ho vyplní.
+// Vyplněné pole akce tiše zahodí (isBot v lib/actions.ts). Mimo obrazovku, ne display:none, ten boti přeskakují.
+export function Honeypot() {
+  return (
+    <div aria-hidden className="absolute -left-[10000px] h-px w-px overflow-hidden">
+      <label>
+        Nevyplňujte
+        <input type="text" name="is_human" tabIndex={-1} autoComplete="off" defaultValue="" />
+      </label>
+    </div>
+  );
+}

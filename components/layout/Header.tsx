@@ -7,6 +7,7 @@ import { site } from "@/lib/site";
 
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
+import SocialLinks from "./SocialLinks";
 
 export default function Header() {
   return (
@@ -23,6 +24,7 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-6 lg:flex">
+          <SocialLinks className="gap-4" />
           <a href={telHref(site.phone)} className="hidden text-button-m tracking-normal whitespace-nowrap text-navy-900 xl:inline">
             {site.phone}
           </a>

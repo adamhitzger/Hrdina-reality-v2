@@ -5,9 +5,10 @@ import { render } from "react-email";
 import KontaktEmail, { kontaktSubject } from "@/emails/kontakt";
 import PrihlaskaEmail, { prihlaskaSubject } from "@/emails/prihlaska";
 import PruvodceEmail, { pruvodceSubject } from "@/emails/pruvodce";
+import PruvodceLeadEmail, { pruvodceLeadSubject } from "@/emails/pruvodce-lead";
 import PoptavkaNemovitostiEmail, { poptavkaSubject, type PoptavkaProperty } from "@/emails/poptavka-nemovitosti";
 import { getOpenPositions } from "@/lib/careers";
-import type { ApplicationInputs, ContactNemovitostiType, ContactType } from "@/lib/schemas";
+import type { ApplicationInputs, ContactNemovitostiType, ContactType, GuideType } from "@/lib/schemas";
 import type { Reality } from "@/sanity/lib/interfaces";
 
 export async function renderKontaktEmail(data: ContactType) {
@@ -61,6 +62,16 @@ export async function renderPruvodceEmail(trackingUrl: string) {
   const email = <PruvodceEmail trackingUrl={trackingUrl} />;
   return {
     subject: pruvodceSubject,
+    html: await render(email),
+    text: await render(email, { plainText: true }),
+  };
+}
+
+export async function renderPruvodceLeadEmail(data: GuideType) {
+  const fullname = `${data.firstname} ${data.lastname}`;
+  const email = <PruvodceLeadEmail fullname={fullname} email={data.email} />;
+  return {
+    subject: pruvodceLeadSubject(fullname),
     html: await render(email),
     text: await render(email, { plainText: true }),
   };

@@ -3,6 +3,8 @@ import { defineType, defineField, defineArrayMember } from "sanity"
 import { isInCzechia } from "../../lib/geo"
 import { GeopointMapInput } from "../components/GeopointMapInput"
 
+export const realityStatuses = ["Na prodej", "K pronájmu", "Rezervace", "Prodáno", "Pronajato"]
+
 export const realityType = defineType({
     name: "reality",
     title: "Nové nemovitosti",
@@ -124,7 +126,7 @@ export const realityType = defineType({
             title: "Status nemovitosti",
             type: "string",
             options: {
-                list: ["Na prodej", "K pronájmu", "Prodáno", "Rezervace" ,"Pronajato"],
+                list: realityStatuses,
                 layout: "dropdown",
             }
         }),
@@ -233,5 +235,13 @@ export const realityType = defineType({
                 layout: "dropdown",
             }
         }),
-    ]
+    ],
+    preview: {
+        select: { title: "name", status: "status", city: "city", media: "image" },
+        prepare: ({ title, status, city, media }) => ({
+            title,
+            subtitle: [status ?? "Bez statusu", city].filter(Boolean).join(" · "),
+            media,
+        }),
+    },
 })

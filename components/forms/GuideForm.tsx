@@ -8,7 +8,7 @@ import { sendGuide } from "@/lib/actions";
 import type { GuideType } from "@/lib/schemas";
 import type { ActionResponse } from "@/types";
 
-import { TextField } from "./fields";
+import { Honeypot, TextField } from "./fields";
 import { initialActionState, useActionToast } from "./useActionToast";
 
 // /pruvodce: celé PDF průvodce na e-mail
@@ -29,6 +29,7 @@ export default function GuideForm() {
 
   return (
     <form action={formAction} noValidate className="flex flex-col gap-[18px]">
+      <Honeypot />
       <div className="flex flex-col gap-[18px] md:flex-row md:gap-4 [&>*]:flex-1">
         <TextField
           idPrefix="guide-"

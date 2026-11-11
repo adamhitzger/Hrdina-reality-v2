@@ -8,7 +8,7 @@ import { sendApplication } from "@/lib/actions";
 import { CV_MAX_BYTES, CV_TYPES, type ApplicationInputs } from "@/lib/schemas";
 import type { ActionResponse } from "@/types";
 
-import { SelectField, TextAreaField, TextField } from "./fields";
+import { Honeypot, SelectField, TextAreaField, TextField } from "./fields";
 import { initialActionState, useActionToast } from "./useActionToast";
 
 const sources = ["Doporučení od známého", "Web / Google", "Sociální sítě", "Inzerát", "Jinak"];
@@ -42,6 +42,7 @@ export default function ApplicationForm({ positions, defaultPosition }: { positi
 
   return (
     <form action={formAction} noValidate className="flex flex-col gap-[18px]">
+      <Honeypot />
       <div className="flex flex-col gap-[18px] md:flex-row md:gap-4 [&>*]:flex-1">
         <TextField
           idPrefix="app-"

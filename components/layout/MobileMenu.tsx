@@ -9,6 +9,8 @@ import { telHref } from "@/lib/format";
 import { footerNav } from "@/lib/nav";
 import { site } from "@/lib/site";
 
+import SocialLinks from "./SocialLinks";
+
 export default function MobileMenu() {
   const pathname = usePathname();
   // Menu je otevřené jen na stránce, kde se otevřelo → po navigaci se samo zavře
@@ -45,6 +47,7 @@ export default function MobileMenu() {
         <a href={telHref(site.phone)} className="mt-6 block text-title-s text-navy-900">
           {site.phone}
         </a>
+        <SocialLinks className="mt-5 gap-5" iconClassName="size-6" />
         <Link href="/kontakt" className={`${button.brass} mt-4 w-full py-4`}>
           Nezávazná konzultace
         </Link>

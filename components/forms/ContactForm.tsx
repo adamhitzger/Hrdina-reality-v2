@@ -8,7 +8,7 @@ import { sendContact } from "@/lib/actions";
 import type { ContactType } from "@/lib/schemas";
 import type { ActionResponse } from "@/types";
 
-import { TextAreaField, TextField } from "./fields";
+import { Honeypot, TextAreaField, TextField } from "./fields";
 import { initialActionState, useActionToast } from "./useActionToast";
 
 // Figma: Kontakt → Formulář (32:662)
@@ -18,6 +18,7 @@ export default function ContactForm() {
 
   return (
     <form action={formAction} noValidate className="flex flex-col gap-[18px]">
+      <Honeypot />
       <TextField
         name="fullname"
         label="Jméno a příjmení"
